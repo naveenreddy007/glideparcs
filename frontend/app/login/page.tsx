@@ -89,7 +89,7 @@ export default function UnifiedLandingLogin() {
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: S, ease: "easeOut" }}
-              className="font-yellowtail text-[56px] sm:text-[80px] lg:text-[110px] leading-[0.8] tracking-normal text-white drop-shadow-sm pr-4 -rotate-2 origin-left"
+              className="font-geist-sans font-medium text-[40px] sm:text-[54px] lg:text-[68px] leading-[1.05] tracking-tight text-white drop-shadow-sm pr-4 origin-left"
             >
               Great Places
             </motion.div>
