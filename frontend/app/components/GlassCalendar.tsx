@@ -69,10 +69,10 @@ export default function GlassCalendar({ holidays, month, year, onPrev, onNext }:
   };
 
   return (
-    <div className="relative w-full overflow-hidden rounded-[32px] border border-white/10 bg-white/[0.03] backdrop-blur-[40px] shadow-[0_30px_60px_rgba(0,0,0,0.3)] p-5 md:p-7">
+    <div className="relative w-full overflow-hidden rounded-[32px] border border-slate-200 dark:border-white/10 bg-white/60 dark:bg-white/[0.03] backdrop-blur-[40px] shadow-[0_30px_60px_rgba(0,0,0,0.05)] dark:shadow-[0_30px_60px_rgba(0,0,0,0.3)] p-5 md:p-7 transition-colors duration-300">
       {/* Ambient glow */}
-      <div className="pointer-events-none absolute -right-20 -top-20 h-[350px] w-[350px] rounded-full bg-cyan-500/8 blur-[100px]" />
-      <div className="pointer-events-none absolute -bottom-20 -left-20 h-[250px] w-[250px] rounded-full bg-blue-600/10 blur-[100px]" />
+      <div className="pointer-events-none absolute -right-20 -top-20 h-[350px] w-[350px] rounded-full bg-cyan-400/20 dark:bg-cyan-500/8 blur-[100px]" />
+      <div className="pointer-events-none absolute -bottom-20 -left-20 h-[250px] w-[250px] rounded-full bg-blue-400/20 dark:bg-blue-600/10 blur-[100px]" />
 
       {/* Month header */}
       <div className="relative z-10 flex items-center justify-between mb-6">
@@ -85,16 +85,24 @@ export default function GlassCalendar({ holidays, month, year, onPrev, onNext }:
             transition={{ type: 'spring', stiffness: 200, damping: 20, mass: 0.8 }}
             className="flex items-baseline gap-3"
           >
-            <h2 className="text-2xl font-extrabold tracking-tight md:text-3xl">{MONTH_NAMES[month]}</h2>
-            <span className="text-xl font-light text-white/25 md:text-2xl">{year}</span>
+            <h2 className="text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white md:text-3xl">{MONTH_NAMES[month]}</h2>
+            <span className="text-xl font-medium text-slate-500 dark:text-white/40 md:text-2xl">{year}</span>
           </motion.div>
         </AnimatePresence>
         <div className="flex gap-1.5">
-          <button onClick={handlePrev} className="group flex h-10 w-10 items-center justify-center rounded-xl bg-white/5 border border-white/10 transition-all hover:bg-white/15 hover:border-white/20 active:scale-90">
-            <ChevronLeft size={18} className="text-white/40 group-hover:text-white transition-colors" />
+          <button 
+            onClick={handlePrev} 
+            aria-label="Previous month"
+            className="group flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 transition-all hover:bg-slate-200 dark:hover:bg-white/15 dark:hover:border-white/20 active:scale-90"
+          >
+            <ChevronLeft size={18} className="text-slate-600 dark:text-white/40 group-hover:text-slate-900 dark:group-hover:text-white transition-colors" />
           </button>
-          <button onClick={handleNext} className="group flex h-10 w-10 items-center justify-center rounded-xl bg-white/5 border border-white/10 transition-all hover:bg-white/15 hover:border-white/20 active:scale-90">
-            <ChevronRight size={18} className="text-white/40 group-hover:text-white transition-colors" />
+          <button 
+            onClick={handleNext} 
+            aria-label="Next month"
+            className="group flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 transition-all hover:bg-slate-200 dark:hover:bg-white/15 dark:hover:border-white/20 active:scale-90"
+          >
+            <ChevronRight size={18} className="text-slate-600 dark:text-white/40 group-hover:text-slate-900 dark:group-hover:text-white transition-colors" />
           </button>
         </div>
       </div>
@@ -105,7 +113,7 @@ export default function GlassCalendar({ holidays, month, year, onPrev, onNext }:
           <div
             key={d}
             className={`text-center text-[10px] font-bold uppercase tracking-[2px] py-1 ${
-              i === 0 || i === 6 ? 'text-white/20' : 'text-white/35'
+              i === 0 || i === 6 ? 'text-slate-400 dark:text-white/30' : 'text-slate-500 dark:text-white/50'
             }`}
           >
             {d}
@@ -139,24 +147,24 @@ export default function GlassCalendar({ holidays, month, year, onPrev, onNext }:
                   onMouseLeave={() => setHoveredDate(null)}
                   className={`relative group flex flex-col rounded-xl border transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] min-h-[72px] md:min-h-[82px] p-1.5 ${
                     !dayInfo.isCurrentMonth
-                      ? 'border-transparent opacity-15'
+                      ? 'border-transparent opacity-30 dark:opacity-15'
                       : holiday
-                        ? 'border-white/15 bg-white/[0.07] hover:bg-white/[0.14] hover:-translate-y-0.5 hover:shadow-lg cursor-pointer'
+                        ? 'border-slate-200 dark:border-white/15 bg-white dark:bg-white/[0.07] hover:bg-slate-50 dark:hover:bg-white/[0.14] hover:-translate-y-0.5 shadow-sm hover:shadow-md dark:shadow-none dark:hover:shadow-lg cursor-pointer'
                         : isToday
-                          ? 'border-cyan-400/30 bg-cyan-400/[0.06]'
+                          ? 'border-cyan-400/50 dark:border-cyan-400/30 bg-cyan-50 dark:bg-cyan-400/[0.06]'
                           : isWeekend
-                            ? 'border-white/[0.03] bg-white/[0.015]'
-                            : 'border-white/[0.04] bg-white/[0.025] hover:bg-white/[0.06] hover:-translate-y-0.5'
+                            ? 'border-slate-100 dark:border-white/[0.03] bg-slate-50/50 dark:bg-white/[0.015]'
+                            : 'border-slate-200 dark:border-white/[0.04] bg-slate-50 dark:bg-white/[0.025] hover:bg-slate-100 dark:hover:bg-white/[0.06] hover:-translate-y-0.5'
                   }`}
                 >
                   {/* Day number */}
                   <span
                     className={`text-sm font-semibold leading-none ${
                       isToday
-                        ? 'text-cyan-300'
+                        ? 'text-cyan-600 dark:text-cyan-300'
                         : dayInfo.isCurrentMonth
-                          ? isWeekend ? 'text-white/30' : 'text-white/70'
-                          : 'text-white/20'
+                          ? isWeekend ? 'text-slate-500 dark:text-white/40' : 'text-slate-800 dark:text-white/80'
+                          : 'text-slate-400 dark:text-white/30'
                     }`}
                   >
                     {dayInfo.day}
@@ -164,7 +172,7 @@ export default function GlassCalendar({ holidays, month, year, onPrev, onNext }:
 
                   {/* Today pulsing dot */}
                   {isToday && (
-                    <div className="absolute top-1 right-1 h-2 w-2 rounded-full bg-cyan-400 shadow-[0_0_6px_rgba(34,211,238,0.8)] pulsing-ring" />
+                    <div className="absolute top-1 right-1 h-2 w-2 rounded-full bg-cyan-500 dark:bg-cyan-400 shadow-[0_0_6px_rgba(34,211,238,0.8)] pulsing-ring" />
                   )}
 
                   {/* Holiday content inside cell */}
@@ -173,7 +181,7 @@ export default function GlassCalendar({ holidays, month, year, onPrev, onNext }:
                       <div className={`h-[3px] w-full rounded-full bg-gradient-to-r ${holiday.color}`} />
                       <div className="flex items-center gap-0.5">
                         <span className="text-[11px] leading-none shrink-0">{holiday.emoji}</span>
-                        <span className="text-[8px] md:text-[9px] font-bold text-white/50 truncate leading-tight">
+                        <span className="text-[8px] md:text-[9px] font-bold text-slate-600 dark:text-white/70 truncate leading-tight">
                           {holiday.name.length > 12 ? holiday.name.split(' ')[0] : holiday.name}
                         </span>
                       </div>
@@ -188,13 +196,13 @@ export default function GlassCalendar({ holidays, month, year, onPrev, onNext }:
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 4, scale: 0.95 }}
                         transition={{ type: 'spring', stiffness: 400, damping: 25, mass: 0.5 }}
-                        className="pointer-events-none absolute bottom-full left-1/2 z-50 mb-2 -translate-x-1/2 whitespace-nowrap rounded-2xl border border-white/15 bg-[#0a1929]/95 px-4 py-3 shadow-2xl backdrop-blur-xl"
+                        className="pointer-events-none absolute bottom-full left-1/2 z-50 mb-2 -translate-x-1/2 whitespace-nowrap rounded-2xl border border-slate-200 dark:border-white/15 bg-white/95 dark:bg-[#0a1929]/95 px-4 py-3 shadow-xl dark:shadow-2xl backdrop-blur-xl"
                       >
                         <div className="flex items-center gap-2.5">
                           <span className="text-lg">{holiday.emoji}</span>
                           <div>
-                            <div className="text-[13px] font-bold text-white">{holiday.name}</div>
-                            <div className="text-[10px] font-semibold text-white/40 mt-0.5">
+                            <div className="text-[13px] font-bold text-slate-900 dark:text-white">{holiday.name}</div>
+                            <div className="text-[10px] font-semibold text-slate-500 dark:text-white/60 mt-0.5">
                               {holiday.type} •{' '}
                               {new Date(dateStr + 'T00:00:00').toLocaleDateString('en-US', {
                                 weekday: 'short',
@@ -204,7 +212,7 @@ export default function GlassCalendar({ holidays, month, year, onPrev, onNext }:
                             </div>
                           </div>
                         </div>
-                        <div className="absolute -bottom-[5px] left-1/2 h-2.5 w-2.5 -translate-x-1/2 rotate-45 border-b border-r border-white/15 bg-[#0a1929]/95" />
+                        <div className="absolute -bottom-[5px] left-1/2 h-2.5 w-2.5 -translate-x-1/2 rotate-45 border-b border-r border-slate-200 dark:border-white/15 bg-white/95 dark:bg-[#0a1929]/95" />
                       </motion.div>
                     )}
                   </AnimatePresence>
