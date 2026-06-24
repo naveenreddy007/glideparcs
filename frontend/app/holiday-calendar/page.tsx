@@ -246,10 +246,15 @@ export default function HolidayCalendarPage() {
 
         {/* Title + Controls Row */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10 mt-2">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-cyan-400/25 bg-cyan-400/10 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[2px] text-cyan-300 backdrop-blur">
+          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ type: 'spring', stiffness: 120, damping: 18, mass: 0.8, delay: 0.1 }}>
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9 }} 
+              animate={{ opacity: 1, scale: 1 }} 
+              transition={{ type: 'spring', stiffness: 200, damping: 20, delay: 0.2 }}
+              className="mb-4 inline-flex items-center gap-2 rounded-full border border-cyan-400/25 bg-cyan-400/10 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[2px] text-cyan-300 backdrop-blur"
+            >
               <Zap size={12} className="fill-cyan-300" /> Enterprise Schedule
-            </div>
+            </motion.div>
             <h1 className="text-4xl font-black tracking-tighter md:text-6xl">
               Holiday Calendar{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-white/30 to-white/10">2026</span>
@@ -258,9 +263,9 @@ export default function HolidayCalendarPage() {
 
           {/* Search + Region pills */}
           <motion.div
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
+            transition={{ type: 'spring', stiffness: 150, damping: 20, mass: 0.8, delay: 0.25 }}
             className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3"
           >
             {/* Search */}
@@ -299,9 +304,9 @@ export default function HolidayCalendarPage() {
 
           {/* ROW 1: Year Overview */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.15 }}
+            initial={{ opacity: 0, y: 30, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ type: 'spring', stiffness: 120, damping: 20, mass: 0.9, delay: 0.3 }}
             className="rounded-[32px] border border-white/[0.06] bg-white/[0.02] backdrop-blur-[30px] p-5 md:p-6 shadow-[0_20px_40px_rgba(0,0,0,0.2)]"
           >
             <div className="flex items-center gap-2 mb-4">
@@ -327,9 +332,9 @@ export default function HolidayCalendarPage() {
 
             {/* Main Calendar */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.98 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+              initial={{ opacity: 0, scale: 0.96, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ type: 'spring', stiffness: 120, damping: 20, mass: 0.9, delay: 0.4 }}
             >
               <GlassCalendar
                 holidays={filteredHolidays}
@@ -342,9 +347,9 @@ export default function HolidayCalendarPage() {
 
             {/* Sidebar */}
             <motion.div
-              initial={{ opacity: 0, x: 30 }}
+              initial={{ opacity: 0, x: 40 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.25 }}
+              transition={{ type: 'spring', stiffness: 120, damping: 22, mass: 0.9, delay: 0.5 }}
               className="flex flex-col gap-5"
             >
               {/* Countdown Widget */}
@@ -420,10 +425,10 @@ export default function HolidayCalendarPage() {
                       <motion.div
                         layout
                         key={holiday.date + holiday.name}
-                        initial={{ opacity: 0, x: -15 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -15 }}
-                        transition={{ duration: 0.25 }}
+                        initial={{ opacity: 0, x: -20, scale: 0.95 }}
+                        animate={{ opacity: 1, x: 0, scale: 1 }}
+                        exit={{ opacity: 0, x: -20, scale: 0.95 }}
+                        transition={{ type: 'spring', stiffness: 200, damping: 22, mass: 0.7 }}
                         className={`group relative flex items-center gap-3 rounded-2xl border p-3.5 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg ${
                           holiday.daysAway < 0
                             ? 'border-white/[0.03] bg-white/[0.01] opacity-40'

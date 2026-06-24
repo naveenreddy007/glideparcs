@@ -63,9 +63,9 @@ export default function GlassCalendar({ holidays, month, year, onPrev, onNext }:
   };
 
   const variants = {
-    enter: (dir: number) => ({ x: dir > 0 ? 50 : -50, opacity: 0 }),
-    center: { x: 0, opacity: 1 },
-    exit: (dir: number) => ({ x: dir < 0 ? 50 : -50, opacity: 0 }),
+    enter: (dir: number) => ({ x: dir > 0 ? 40 : -40, opacity: 0, scale: 0.96 }),
+    center: { zIndex: 1, x: 0, opacity: 1, scale: 1 },
+    exit: (dir: number) => ({ zIndex: 0, x: dir < 0 ? 40 : -40, opacity: 0, scale: 0.96 }),
   };
 
   return (
@@ -79,10 +79,10 @@ export default function GlassCalendar({ holidays, month, year, onPrev, onNext }:
         <AnimatePresence mode="popLayout">
           <motion.div
             key={`${year}-${month}`}
-            initial={{ y: -12, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: 12, opacity: 0 }}
-            transition={{ duration: 0.25 }}
+            initial={{ y: -15, opacity: 0, scale: 0.95 }}
+            animate={{ y: 0, opacity: 1, scale: 1 }}
+            exit={{ y: 15, opacity: 0, scale: 0.95 }}
+            transition={{ type: 'spring', stiffness: 200, damping: 20, mass: 0.8 }}
             className="flex items-baseline gap-3"
           >
             <h2 className="text-2xl font-extrabold tracking-tight md:text-3xl">{MONTH_NAMES[month]}</h2>
@@ -123,7 +123,7 @@ export default function GlassCalendar({ holidays, month, year, onPrev, onNext }:
             initial="enter"
             animate="center"
             exit="exit"
-            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+            transition={{ type: 'spring', stiffness: 220, damping: 25, mass: 0.8 }}
             className="grid grid-cols-7 gap-1"
           >
             {gridDays.map((dayInfo, i) => {
@@ -137,7 +137,7 @@ export default function GlassCalendar({ holidays, month, year, onPrev, onNext }:
                   key={i}
                   onMouseEnter={() => setHoveredDate(dateStr)}
                   onMouseLeave={() => setHoveredDate(null)}
-                  className={`relative group flex flex-col rounded-xl border transition-all duration-200 min-h-[72px] md:min-h-[82px] p-1.5 ${
+                  className={`relative group flex flex-col rounded-xl border transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] min-h-[72px] md:min-h-[82px] p-1.5 ${
                     !dayInfo.isCurrentMonth
                       ? 'border-transparent opacity-15'
                       : holiday
@@ -187,7 +187,7 @@ export default function GlassCalendar({ holidays, month, year, onPrev, onNext }:
                         initial={{ opacity: 0, y: 6, scale: 0.95 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 4, scale: 0.95 }}
-                        transition={{ duration: 0.12 }}
+                        transition={{ type: 'spring', stiffness: 400, damping: 25, mass: 0.5 }}
                         className="pointer-events-none absolute bottom-full left-1/2 z-50 mb-2 -translate-x-1/2 whitespace-nowrap rounded-2xl border border-white/15 bg-[#0a1929]/95 px-4 py-3 shadow-2xl backdrop-blur-xl"
                       >
                         <div className="flex items-center gap-2.5">
