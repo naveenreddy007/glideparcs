@@ -1,0 +1,195 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-geist-sans: var(--font-geist-sans);
+  --font-geist-mono: var(--font-geist-mono);
+  --font-montserrat: var(--font-montserrat);
+  --font-yellowtail: var(--font-yellowtail);
+
+  /* Glideparcs / Premium Parking brand */
+  --blue: #0A2F6B;
+  --blue-dark: #06234F;
+  --red: #d21115;
+  --red-hover: #b30e12;
+  --white: #ffffff;
+  --gray: #9CA3AF;
+  --light-gray: #E5E7EB;
+}
+
+:root {
+  --font-geist-sans: var(--font-geist-sans);
+  --font-geist-mono: var(--font-geist-mono);
+
+  /* Glideparcs / Premium Parking brand */
+  --blue: #0A2F6B;
+  --blue-dark: #06234F;
+  --red: #d21115;
+  --red-hover: #b30e12;
+  --white: #ffffff;
+  --gray: #9CA3AF;
+  --light-gray: #E5E7EB;
+  --sidebar: hsl(0 0% 98%);
+  --sidebar-foreground: hsl(240 5.3% 26.1%);
+  --sidebar-primary: hsl(240 5.9% 10%);
+  --sidebar-primary-foreground: hsl(0 0% 98%);
+  --sidebar-accent: hsl(240 4.8% 95.9%);
+  --sidebar-accent-foreground: hsl(240 5.9% 10%);
+  --sidebar-border: hsl(220 13% 91%);
+  --sidebar-ring: hsl(217.2 91.2% 59.8%);
+}
+
+body {
+  font-family: var(--font-geist-sans);
+}
+
+/* Subtle repeating icon pattern inspired by the office wall */
+.icon-pattern {
+  background-image: 
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Large diagram icons - premium feel from office photos */
+.diagram-icon-large {
+  width: 68px;
+  height: 68px;
+  background: white;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0A2F6B;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.2), 0 4px 6px -4px rgb(0 0 0 / 0.2);
+  transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.2s ease;
+  border: 1px solid rgba(255,255,255,0.8);
+}
+
+.diagram-icon-large:hover {
+  transform: scale(1.06) translateY(-2px);
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.15), 0 8px 10px -6px rgb(0 0 0 / 0.15);
+}
+
+.diagram-icon-central {
+  width: 78px;
+  height: 78px;
+  background: white;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0A2F6B;
+  box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.4);
+  border: 1px solid rgba(255,255,255,0.9);
+  z-index: 20;
+}
+
+/* Connection lines with subtle animation */
+.diagram-line {
+  stroke: #ffffff;
+  stroke-width: 1.75;
+  stroke-opacity: 0.28;
+  stroke-linecap: round;
+}
+
+/* Premium glass card */
+.glass {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(20px);
+}
+
+/* Nice button */
+.cta-button {
+  transition: all 0.15s cubic-bezier(0.23, 1.0, 0.32, 1);
+}
+
+.cta-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 15px -3px rgb(210 17 21 / 0.3), 0 4px 6px -4px rgb(210 17 21 / 0.3);
+}
+
+.cta-button:active {
+  transform: scale(0.985);
+}
+
+/* Feature cards */
+.feature-card {
+  transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1), 
+              border-color 0.2s ease,
+              background 0.2s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.07);
+}
+
+/* Subtle entrance animation for diagram nodes */
+@keyframes nodePop {
+  from { opacity: 0; transform: scale(0.6) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.diagram-node {
+  animation: nodePop 0.5s cubic-bezier(0.23, 1, 0.32, 1) backwards;
+}
+
+.diagram-node:nth-child(1) { animation-delay: 120ms; }
+.diagram-node:nth-child(2) { animation-delay: 180ms; }
+.diagram-node:nth-child(3) { animation-delay: 240ms; }
+.diagram-node:nth-child(4) { animation-delay: 300ms; }
+.diagram-node:nth-child(5) { animation-delay: 360ms; }
+.diagram-node:nth-child(6) { animation-delay: 420ms; }
+.diagram-node:nth-child(7) { animation-delay: 480ms; }
+
+/* Floating bokeh particles */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px) scale(1);
+  }
+  25% {
+    transform: translateY(-30px) translateX(15px) scale(1.1);
+  }
+  50% {
+    transform: translateY(-10px) translateX(-10px) scale(0.95);
+  }
+  75% {
+    transform: translateY(-40px) translateX(20px) scale(1.05);
+  }
+}
+
+.animate-float {
+  animation: float linear infinite;
+}
+
+.defer-render {
+  content-visibility: auto;
+  contain-intrinsic-size: auto none auto 250px;
+}
+
+.dark {
+  --sidebar: hsl(240 5.9% 10%);
+  --sidebar-foreground: hsl(240 4.8% 95.9%);
+  --sidebar-primary: hsl(224.3 76.3% 48%);
+  --sidebar-primary-foreground: hsl(0 0% 100%);
+  --sidebar-accent: hsl(240 3.7% 15.9%);
+  --sidebar-accent-foreground: hsl(240 4.8% 95.9%);
+  --sidebar-border: hsl(240 3.7% 15.9%);
+  --sidebar-ring: hsl(217.2 91.2% 59.8%);
+}
+
+@theme inline {
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
