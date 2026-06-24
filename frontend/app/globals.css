@@ -166,6 +166,23 @@ body {
   animation: float linear infinite;
 }
 
+/* Pulsing ring for today indicator on calendar */
+@keyframes pulsing-ring {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(34, 211, 238, 0.6); }
+  50% { box-shadow: 0 0 0 5px rgba(34, 211, 238, 0); }
+}
+
+.pulsing-ring {
+  animation: pulsing-ring 2s ease-in-out infinite;
+}
+
+/* Gradient shimmer for bento card borders */
+@keyframes shimmer-border {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
 .defer-render {
   content-visibility: auto;
   contain-intrinsic-size: auto none auto 250px;

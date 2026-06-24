@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -9,105 +9,112 @@ export interface Holiday {
   name: string;
   type: string;
   color: string;
+  emoji: string;
 }
 
 interface GlassCalendarProps {
   holidays: Holiday[];
+  month: number;
+  year: number;
+  onPrev: () => void;
+  onNext: () => void;
 }
 
-export default function GlassCalendar({ holidays }: GlassCalendarProps) {
-  const [currentDate, setCurrentDate] = useState(new Date(2026, 0, 1));
+const MONTH_NAMES = [
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December',
+];
+const DAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+export default function GlassCalendar({ holidays, month, year, onPrev, onNext }: GlassCalendarProps) {
   const [direction, setDirection] = useState(0);
   const [hoveredDate, setHoveredDate] = useState<string | null>(null);
-  const [isMounted, setIsMounted] = useState(false);
-  
-  if (typeof window !== 'undefined' && !isMounted) {
-     setTimeout(() => setIsMounted(true), 0);
-  }
 
-  const nextMonth = () => {
-    setDirection(1);
-    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));
-  };
-  
-  const prevMonth = () => {
-    setDirection(-1);
-    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1));
-  };
-
-  const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-  
-  const year = currentDate.getFullYear();
-  const month = currentDate.getMonth();
+  const handlePrev = () => { setDirection(-1); onPrev(); };
+  const handleNext = () => { setDirection(1); onNext(); };
 
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const firstDayOfMonth = new Date(year, month, 1).getDay();
   const daysInPrevMonth = new Date(year, month, 0).getDate();
 
-  const today = new Date(); 
-  const todayFormatted = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+  const todayStr = useMemo(() => {
+    const t = new Date();
+    return `${t.getFullYear()}-${String(t.getMonth() + 1).padStart(2, '0')}-${String(t.getDate()).padStart(2, '0')}`;
+  }, []);
 
-  const gridDays = [];
+  const gridDays = useMemo(() => {
+    const days: { day: number; isCurrentMonth: boolean; monthOffset: number }[] = [];
+    for (let i = firstDayOfMonth - 1; i >= 0; i--) {
+      days.push({ day: daysInPrevMonth - i, isCurrentMonth: false, monthOffset: -1 });
+    }
+    for (let i = 1; i <= daysInMonth; i++) {
+      days.push({ day: i, isCurrentMonth: true, monthOffset: 0 });
+    }
+    const remaining = 42 - days.length;
+    for (let i = 1; i <= remaining; i++) {
+      days.push({ day: i, isCurrentMonth: false, monthOffset: 1 });
+    }
+    return days;
+  }, [year, month, daysInMonth, firstDayOfMonth, daysInPrevMonth]);
 
-  for (let i = firstDayOfMonth - 1; i >= 0; i--) {
-    gridDays.push({ day: daysInPrevMonth - i, isCurrentMonth: false, monthOffset: -1 });
-  }
-
-  for (let i = 1; i <= daysInMonth; i++) {
-    gridDays.push({ day: i, isCurrentMonth: true, monthOffset: 0 });
-  }
-
-  const remainingCells = 42 - gridDays.length;
-  for (let i = 1; i <= remainingCells; i++) {
-    gridDays.push({ day: i, isCurrentMonth: false, monthOffset: 1 });
-  }
-
-  const getFormattedDate = (dayInfo: any) => {
+  const getDateStr = (dayInfo: { day: number; monthOffset: number }) => {
     const d = new Date(year, month + dayInfo.monthOffset, dayInfo.day);
     return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
   };
 
   const variants = {
-    enter: (direction: number) => ({ x: direction > 0 ? 40 : -40, opacity: 0, scale: 0.95 }),
-    center: { zIndex: 1, x: 0, opacity: 1, scale: 1 },
-    exit: (direction: number) => ({ zIndex: 0, x: direction < 0 ? 40 : -40, opacity: 0, scale: 0.95 }),
+    enter: (dir: number) => ({ x: dir > 0 ? 50 : -50, opacity: 0 }),
+    center: { x: 0, opacity: 1 },
+    exit: (dir: number) => ({ x: dir < 0 ? 50 : -50, opacity: 0 }),
   };
 
   return (
-    <div className="relative w-full overflow-hidden rounded-[40px] border border-white/20 bg-white/5 p-6 backdrop-blur-[40px] shadow-2xl ring-1 ring-white/10 md:p-8">
-      {/* Background glowing orbs */}
-      <div className="pointer-events-none absolute -right-32 -top-32 h-[500px] w-[500px] rounded-full bg-cyan-400/20 blur-[100px] mix-blend-screen animate-pulse"></div>
-      <div className="pointer-events-none absolute -bottom-32 -left-32 h-[400px] w-[400px] rounded-full bg-blue-600/30 blur-[120px] mix-blend-screen" style={{ animation: 'pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite' }}></div>
+    <div className="relative w-full overflow-hidden rounded-[32px] border border-white/10 bg-white/[0.03] backdrop-blur-[40px] shadow-[0_30px_60px_rgba(0,0,0,0.3)] p-5 md:p-7">
+      {/* Ambient glow */}
+      <div className="pointer-events-none absolute -right-20 -top-20 h-[350px] w-[350px] rounded-full bg-cyan-500/8 blur-[100px]" />
+      <div className="pointer-events-none absolute -bottom-20 -left-20 h-[250px] w-[250px] rounded-full bg-blue-600/10 blur-[100px]" />
 
-      <div className="relative z-10 flex items-end justify-between mb-10 border-b border-white/10 pb-6">
-        <div>
-          <motion.div 
-            key={month}
-            initial={{ y: -20, opacity: 0 }}
+      {/* Month header */}
+      <div className="relative z-10 flex items-center justify-between mb-6">
+        <AnimatePresence mode="popLayout">
+          <motion.div
+            key={`${year}-${month}`}
+            initial={{ y: -12, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            className="flex items-center gap-3"
+            exit={{ y: 12, opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="flex items-baseline gap-3"
           >
-            <h2 className="text-4xl font-extrabold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-white to-white/70 md:text-5xl">
-              {monthNames[month]}
-            </h2>
-            <span className="text-3xl font-light text-white/40 md:text-4xl">{year}</span>
+            <h2 className="text-2xl font-extrabold tracking-tight md:text-3xl">{MONTH_NAMES[month]}</h2>
+            <span className="text-xl font-light text-white/25 md:text-2xl">{year}</span>
           </motion.div>
-        </div>
-        <div className="flex gap-2">
-          <button onClick={prevMonth} className="group flex h-12 w-12 items-center justify-center rounded-2xl bg-white/5 border border-white/10 text-white backdrop-blur transition-all hover:bg-white/20 hover:scale-105 hover:border-white/30 active:scale-95">
-            <ChevronLeft size={22} className="transition-transform group-hover:-translate-x-1 text-white/70 group-hover:text-white" />
+        </AnimatePresence>
+        <div className="flex gap-1.5">
+          <button onClick={handlePrev} className="group flex h-10 w-10 items-center justify-center rounded-xl bg-white/5 border border-white/10 transition-all hover:bg-white/15 hover:border-white/20 active:scale-90">
+            <ChevronLeft size={18} className="text-white/40 group-hover:text-white transition-colors" />
           </button>
-          <button onClick={nextMonth} className="group flex h-12 w-12 items-center justify-center rounded-2xl bg-white/5 border border-white/10 text-white backdrop-blur transition-all hover:bg-white/20 hover:scale-105 hover:border-white/30 active:scale-95">
-            <ChevronRight size={22} className="transition-transform group-hover:translate-x-1 text-white/70 group-hover:text-white" />
+          <button onClick={handleNext} className="group flex h-10 w-10 items-center justify-center rounded-xl bg-white/5 border border-white/10 transition-all hover:bg-white/15 hover:border-white/20 active:scale-90">
+            <ChevronRight size={18} className="text-white/40 group-hover:text-white transition-colors" />
           </button>
         </div>
       </div>
 
-      <div className="relative z-10 grid grid-cols-7 gap-2 mb-4 text-center text-sm font-bold uppercase tracking-[3px] text-white/40">
-        <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+      {/* Day name headers */}
+      <div className="relative z-10 grid grid-cols-7 gap-1 mb-2">
+        {DAY_NAMES.map((d, i) => (
+          <div
+            key={d}
+            className={`text-center text-[10px] font-bold uppercase tracking-[2px] py-1 ${
+              i === 0 || i === 6 ? 'text-white/20' : 'text-white/35'
+            }`}
+          >
+            {d}
+          </div>
+        ))}
       </div>
 
-      <div className="relative z-10 min-h-[500px]">
+      {/* Calendar grid */}
+      <div className="relative z-10">
         <AnimatePresence custom={direction} mode="popLayout">
           <motion.div
             key={`${year}-${month}`}
@@ -116,64 +123,88 @@ export default function GlassCalendar({ holidays }: GlassCalendarProps) {
             initial="enter"
             animate="center"
             exit="exit"
-            transition={{ type: 'spring', stiffness: 250, damping: 25, mass: 0.8 }}
-            className="grid grid-cols-7 gap-3"
+            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+            className="grid grid-cols-7 gap-1"
           >
             {gridDays.map((dayInfo, i) => {
-              const formattedDate = getFormattedDate(dayInfo);
-              const holiday = holidays.find(h => h.date === formattedDate);
-              const isToday = isMounted && formattedDate === todayFormatted;
+              const dateStr = getDateStr(dayInfo);
+              const holiday = holidays.find(h => h.date === dateStr);
+              const isToday = dateStr === todayStr;
+              const isWeekend = i % 7 === 0 || i % 7 === 6;
 
               return (
                 <div
                   key={i}
-                  onMouseEnter={() => setHoveredDate(formattedDate)}
+                  onMouseEnter={() => setHoveredDate(dateStr)}
                   onMouseLeave={() => setHoveredDate(null)}
-                  className={`relative group flex h-24 flex-col items-center justify-center rounded-2xl border transition-all duration-300 ${
-                    !dayInfo.isCurrentMonth 
-                      ? 'border-transparent bg-transparent opacity-30 hover:opacity-60' 
+                  className={`relative group flex flex-col rounded-xl border transition-all duration-200 min-h-[72px] md:min-h-[82px] p-1.5 ${
+                    !dayInfo.isCurrentMonth
+                      ? 'border-transparent opacity-15'
                       : holiday
-                        ? 'border-white/30 bg-white/15 shadow-[0_8px_32px_rgba(255,255,255,0.05)] backdrop-blur-xl hover:border-white/50 hover:bg-white/25 hover:-translate-y-1'
+                        ? 'border-white/15 bg-white/[0.07] hover:bg-white/[0.14] hover:-translate-y-0.5 hover:shadow-lg cursor-pointer'
                         : isToday
-                          ? 'border-cyan-400/50 bg-cyan-400/10 shadow-[0_0_20px_rgba(34,211,238,0.2)]'
-                          : 'border-white/5 bg-white/5 hover:bg-white/10 hover:border-white/20 hover:-translate-y-1'
+                          ? 'border-cyan-400/30 bg-cyan-400/[0.06]'
+                          : isWeekend
+                            ? 'border-white/[0.03] bg-white/[0.015]'
+                            : 'border-white/[0.04] bg-white/[0.025] hover:bg-white/[0.06] hover:-translate-y-0.5'
                   }`}
                 >
-                  <span className={`text-xl font-medium ${isToday ? 'text-cyan-300' : dayInfo.isCurrentMonth ? 'text-white' : 'text-white/50'}`}>
+                  {/* Day number */}
+                  <span
+                    className={`text-sm font-semibold leading-none ${
+                      isToday
+                        ? 'text-cyan-300'
+                        : dayInfo.isCurrentMonth
+                          ? isWeekend ? 'text-white/30' : 'text-white/70'
+                          : 'text-white/20'
+                    }`}
+                  >
                     {dayInfo.day}
                   </span>
-                  
-                  {isToday && <div className="absolute -top-1 -right-1 h-3 w-3 rounded-full bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.8)] animate-pulse" />}
 
-                  {/* Fix: Animate presence on holiday marker itself so it pops out when filtered out */}
-                  <AnimatePresence>
-                    {holiday && (
-                      <motion.div 
-                        initial={{ scale: 0 }} 
-                        animate={{ scale: 1 }} 
-                        exit={{ scale: 0 }} 
-                        className="absolute bottom-3"
-                      >
-                        <div className={`h-2.5 w-2.5 rounded-full bg-gradient-to-r ${holiday.color} shadow-lg shadow-white/20`} />
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+                  {/* Today pulsing dot */}
+                  {isToday && (
+                    <div className="absolute top-1 right-1 h-2 w-2 rounded-full bg-cyan-400 shadow-[0_0_6px_rgba(34,211,238,0.8)] pulsing-ring" />
+                  )}
 
+                  {/* Holiday content inside cell */}
+                  {holiday && dayInfo.isCurrentMonth && (
+                    <div className="mt-auto flex flex-col gap-0.5 w-full overflow-hidden">
+                      <div className={`h-[3px] w-full rounded-full bg-gradient-to-r ${holiday.color}`} />
+                      <div className="flex items-center gap-0.5">
+                        <span className="text-[11px] leading-none shrink-0">{holiday.emoji}</span>
+                        <span className="text-[8px] md:text-[9px] font-bold text-white/50 truncate leading-tight">
+                          {holiday.name.length > 12 ? holiday.name.split(' ')[0] : holiday.name}
+                        </span>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Hover tooltip */}
                   <AnimatePresence>
-                    {holiday && hoveredDate === formattedDate && (
+                    {holiday && hoveredDate === dateStr && dayInfo.isCurrentMonth && (
                       <motion.div
-                        initial={{ opacity: 0, y: 10, scale: 0.9 }}
+                        initial={{ opacity: 0, y: 6, scale: 0.95 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: 5, scale: 0.9 }}
-                        transition={{ duration: 0.2 }}
-                        className="pointer-events-none absolute bottom-full left-1/2 z-50 mb-3 -translate-x-1/2 w-48 rounded-2xl border border-white/20 bg-[#1a2b4c]/90 p-3 shadow-2xl backdrop-blur-xl"
+                        exit={{ opacity: 0, y: 4, scale: 0.95 }}
+                        transition={{ duration: 0.12 }}
+                        className="pointer-events-none absolute bottom-full left-1/2 z-50 mb-2 -translate-x-1/2 whitespace-nowrap rounded-2xl border border-white/15 bg-[#0a1929]/95 px-4 py-3 shadow-2xl backdrop-blur-xl"
                       >
-                        <div className="flex items-center gap-2 mb-1">
-                          <div className={`h-3 w-3 rounded-full bg-gradient-to-r ${holiday.color}`} />
-                          <span className="text-[10px] font-bold uppercase tracking-widest text-white/60">{holiday.type}</span>
+                        <div className="flex items-center gap-2.5">
+                          <span className="text-lg">{holiday.emoji}</span>
+                          <div>
+                            <div className="text-[13px] font-bold text-white">{holiday.name}</div>
+                            <div className="text-[10px] font-semibold text-white/40 mt-0.5">
+                              {holiday.type} •{' '}
+                              {new Date(dateStr + 'T00:00:00').toLocaleDateString('en-US', {
+                                weekday: 'short',
+                                month: 'short',
+                                day: 'numeric',
+                              })}
+                            </div>
+                          </div>
                         </div>
-                        <div className="text-sm font-semibold text-white leading-tight">{holiday.name}</div>
-                        <div className="absolute -bottom-2 left-1/2 h-4 w-4 -translate-x-1/2 rotate-45 border-b border-r border-white/20 bg-[#1a2b4c]/90"></div>
+                        <div className="absolute -bottom-[5px] left-1/2 h-2.5 w-2.5 -translate-x-1/2 rotate-45 border-b border-r border-white/15 bg-[#0a1929]/95" />
                       </motion.div>
                     )}
                   </AnimatePresence>
