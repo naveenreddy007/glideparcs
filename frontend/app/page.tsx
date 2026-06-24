@@ -186,7 +186,7 @@ export default function LandingPage() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ type: "spring", duration: 0.6, bounce: 0.3 }}
-              className="relative w-full max-w-2xl overflow-hidden rounded-[32px] bg-white text-slate-800 shadow-2xl ring-1 ring-white/10"
+              className="relative w-full max-w-2xl max-h-[85vh] flex flex-col overflow-hidden rounded-[32px] bg-white text-slate-800 shadow-2xl ring-1 ring-white/10"
             >
               <button 
                 onClick={() => setShowPopup(false)}
@@ -195,7 +195,7 @@ export default function LandingPage() {
                 <X size={20} />
               </button>
 
-              <div className="relative h-64 w-full bg-[#24638F] overflow-hidden">
+              <div className="relative shrink-0 h-48 md:h-64 w-full bg-[#24638F] overflow-hidden">
                 <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1558486012-817176f84c6d?q=80&w=2000&auto=format&fit=crop')] bg-cover bg-center opacity-40 mix-blend-overlay"></div>
                 <div className="absolute inset-0 bg-gradient-to-t from-[#24638F] via-[#24638F]/50 to-transparent"></div>
                 <div className="absolute inset-0 bg-gradient-to-r from-[#24638F] to-transparent opacity-80"></div>
@@ -219,12 +219,12 @@ export default function LandingPage() {
                 </div>
               </div>
 
-              <div className="px-8 pb-10 pt-8">
+              <div className="overflow-y-auto px-6 pb-8 pt-6 md:px-8 md:pb-10 md:pt-8">
                 <motion.p 
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.4 }}
-                  className="mb-8 text-[1.1rem] leading-relaxed text-slate-600"
+                  className="mb-8 text-base md:text-[1.1rem] leading-relaxed text-slate-600"
                 >
                   The team in India will focus on advancing Premium Parking's technology, GLIDEPARCS®, from platform enhancements to performance and scalability, continuing to deliver seamless, gateless parking experiences at scale. They'll work in close partnership with our U.S. teams, accelerating how quickly we bring new capabilities to market and raising the bar on what our platform can do.
                 </motion.p>
