@@ -218,29 +218,7 @@ export default function HolidayCalendarPage() {
       </div>
       <FloatingParticles />
 
-      {/* ── Header ── */}
-      <header className="relative z-10 flex items-center justify-between px-5 py-5 md:px-10">
-        <Link
-          href="/"
-          className="group flex items-center gap-2 rounded-full border border-slate-200 dark:border-white/10 bg-white/60 dark:bg-white/5 px-4 py-2 text-sm font-semibold backdrop-blur-md transition-all hover:bg-white hover:border-slate-300 dark:hover:bg-white/15 dark:hover:border-white/20"
-        >
-          <ArrowLeft size={15} className="transition-transform group-hover:-translate-x-1" /> Portal
-        </Link>
 
-        <nav className="hidden lg:flex items-center gap-7 text-sm font-medium text-slate-600 dark:text-white/60">
-          <Link href="#" className="hover:text-slate-900 dark:hover:text-white transition-colors">Company News</Link>
-          <Link href="#" className="hover:text-slate-900 dark:hover:text-white transition-colors">Upcoming Events</Link>
-          <Link href="/holiday-calendar" className="text-cyan-600 dark:text-cyan-300 font-bold">Holiday Calendar</Link>
-          <Link href="#" className="hover:text-slate-900 dark:hover:text-white transition-colors">Organization</Link>
-        </nav>
-
-        <button
-          onClick={downloadICS}
-          className="group flex items-center gap-2 rounded-full bg-cyan-100 dark:bg-cyan-500/15 px-4 py-2 text-sm font-bold text-cyan-700 dark:text-cyan-300 border border-cyan-200 dark:border-cyan-400/25 backdrop-blur-md transition-all hover:bg-cyan-200 dark:hover:bg-cyan-500/25"
-        >
-          <Download size={15} /> Export .ics
-        </button>
-      </header>
 
       {/* ── Main Content ── */}
       <section className="relative z-10 mx-auto max-w-[1440px] px-5 md:px-10">
@@ -298,6 +276,15 @@ export default function HolidayCalendarPage() {
                   {r.label}
                 </button>
               ))}
+              
+              {/* Export ICS Button */}
+              <button
+                onClick={downloadICS}
+                className="hidden sm:flex group items-center gap-2 rounded-xl bg-cyan-100 dark:bg-cyan-500/15 px-3.5 py-2 text-xs font-bold text-cyan-700 dark:text-cyan-300 border border-cyan-200 dark:border-cyan-400/25 transition-all hover:bg-cyan-200 dark:hover:bg-cyan-500/25"
+                title="Export .ics Calendar File"
+              >
+                <Download size={14} /> Export
+              </button>
             </div>
           </motion.div>
         </div>

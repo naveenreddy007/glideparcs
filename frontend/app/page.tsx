@@ -2,13 +2,14 @@
 
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Shield, LayoutDashboard, Sparkles, X, ExternalLink } from 'lucide-react';
+import { ArrowRight, Shield, LayoutDashboard, Sparkles, X, ExternalLink, Menu } from 'lucide-react';
 import FloatingParticles from './components/FloatingParticles';
 import { ThemeToggle } from './components/ThemeToggle';
 import { useState, useEffect } from 'react';
 
 export default function LandingPage() {
   const [showPopup, setShowPopup] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => setShowPopup(true), 800);
@@ -39,15 +40,80 @@ export default function LandingPage() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <ThemeToggle />
+          <div className="hidden sm:block">
+            <ThemeToggle />
+          </div>
           <Link
             href="/login"
-            className="rounded-2xl bg-white px-5 py-2.5 text-sm font-bold text-[#24638F] shadow-lg transition hover:scale-[1.02]"
+            className="hidden sm:flex rounded-2xl bg-white px-5 py-2.5 text-sm font-bold text-[#24638F] shadow-lg transition hover:scale-[1.02]"
           >
             Staff Login
           </Link>
+          
+          {/* Mobile Menu Button */}
+          <button 
+            className="lg:hidden flex items-center justify-center p-2 rounded-xl bg-white/10 text-white border border-white/20"
+            onClick={() => setMobileMenuOpen(true)}
+            aria-label="Open mobile menu"
+          >
+            <Menu size={20} />
+          </button>
         </div>
       </header>
+
+      {/* Mobile Navigation Drawer */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setMobileMenuOpen(false)}
+              className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm lg:hidden"
+            />
+            <motion.div
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="fixed right-0 top-0 bottom-0 z-50 w-[80%] max-w-sm bg-[#1C5075] border-l border-white/10 shadow-2xl p-6 lg:hidden flex flex-col"
+            >
+              <div className="flex items-center justify-between mb-10">
+                <div className="text-lg font-bold tracking-tight text-white">Menu</div>
+                <button 
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="p-2 rounded-full bg-white/10 text-white"
+                  aria-label="Close menu"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+              
+              <nav className="flex flex-col gap-6 text-base font-semibold text-white/90">
+                <Link href="#" className="hover:text-white transition-colors" onClick={() => setMobileMenuOpen(false)}>Company News</Link>
+                <Link href="#" className="hover:text-white transition-colors" onClick={() => setMobileMenuOpen(false)}>Upcoming Events</Link>
+                <Link href="/holiday-calendar" className="hover:text-white transition-colors" onClick={() => setMobileMenuOpen(false)}>Holiday Calendar</Link>
+                <Link href="#" className="hover:text-white transition-colors" onClick={() => setMobileMenuOpen(false)}>Organization Hierarchy</Link>
+              </nav>
+
+              <div className="mt-auto flex flex-col gap-4">
+                <div className="flex items-center justify-between pb-4 border-b border-white/10">
+                  <span className="text-sm font-semibold text-white">Theme</span>
+                  <ThemeToggle />
+                </div>
+                <Link
+                  href="/login"
+                  className="rounded-xl bg-white px-5 py-3.5 text-center text-sm font-bold text-[#24638F] shadow-lg"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Staff Login
+                </Link>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
 
       <section className="relative z-10 mx-auto flex min-h-[calc(100vh-96px)] max-w-6xl flex-col items-center justify-center px-6 text-center">
         <motion.div

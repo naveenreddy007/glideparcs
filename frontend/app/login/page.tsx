@@ -4,8 +4,9 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { 
   Cloud, Megaphone, BarChart3, Shield, CreditCard, DollarSign,
-  ArrowRight, FileText, Settings, Users, AlertTriangle, Box
+  ArrowRight, ArrowLeft, FileText, Settings, Users, AlertTriangle, Box
 } from 'lucide-react';
+import Link from 'next/link';
 import FloatingParticles from '../components/FloatingParticles';
 import { ThemeToggle } from '../components/ThemeToggle';
 
@@ -179,8 +180,14 @@ export default function UnifiedLandingLogin() {
       {/* RIGHT PANE: Login & Icon Wall */}
       <div className="relative w-full md:w-[45%] lg:w-[40%] flex items-center justify-center p-6 md:p-12 overflow-hidden min-h-[60vh] md:min-h-screen">
         
-        {/* Theme Toggle in top right */}
-        <div className="absolute top-6 right-6 z-50">
+        {/* Theme Toggle & Back Button in top right */}
+        <div className="absolute top-6 left-6 md:right-6 md:left-auto z-50 flex items-center gap-3 w-full md:w-auto px-6 md:px-0 justify-between md:justify-end">
+          <Link
+            href="/"
+            className="group flex items-center gap-2 rounded-full border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-800 px-4 py-2 text-sm font-semibold text-gray-600 dark:text-gray-300 shadow-sm transition-all hover:bg-gray-50 dark:hover:bg-slate-700"
+          >
+            <ArrowLeft size={15} className="transition-transform group-hover:-translate-x-1" /> <span className="hidden sm:inline">Portal</span>
+          </Link>
           <ThemeToggle />
         </div>
         
