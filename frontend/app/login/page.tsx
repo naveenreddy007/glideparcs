@@ -75,7 +75,7 @@ export default function UnifiedLandingLogin() {
     <div className="min-h-screen w-full flex flex-col md:flex-row overflow-hidden selection:bg-[#24638F]/20">
       
       {/* LEFT PANE: The Premium Blue Wall */}
-      <div className="relative w-full md:w-[55%] lg:w-[60%] bg-[#24638F] flex flex-col justify-between p-8 md:p-12 lg:p-20 overflow-hidden text-white z-10 min-h-[50vh] md:min-h-screen">
+      <div className="relative hidden md:flex w-full md:w-[55%] lg:w-[60%] bg-[#24638F] flex-col justify-between p-8 md:p-12 lg:p-20 overflow-hidden text-white z-10 min-h-screen">
         {/* Subtle lighting overlay for depth */}
         <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-black/20 pointer-events-none z-0" />
         
@@ -178,7 +178,7 @@ export default function UnifiedLandingLogin() {
       </div>
 
       {/* RIGHT PANE: Login & Icon Wall */}
-      <div className="relative w-full md:w-[45%] lg:w-[40%] flex items-center justify-center p-6 md:p-12 overflow-hidden min-h-[60vh] md:min-h-screen">
+      <div className="relative w-full md:w-[45%] lg:w-[40%] flex items-center justify-center p-6 md:p-12 overflow-hidden min-h-screen">
         
         {/* Theme Toggle & Back Button in top right */}
         <div className="absolute top-6 left-6 md:right-6 md:left-auto z-50 flex items-center gap-3 w-full md:w-auto px-6 md:px-0 justify-between md:justify-end">
@@ -208,9 +208,18 @@ export default function UnifiedLandingLogin() {
           initial={{ opacity: 0, x: 30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.7, delay: S + 0.3, ease: [0.23, 1, 0.32, 1] }}
-          className="relative z-10 w-full max-w-[400px] bg-[#FAFAF9] dark:bg-slate-800 border border-gray-200/60 dark:border-white/10 p-8 md:p-12 rounded-[36px] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.05)] dark:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.3)]"
+          className="relative z-10 w-full max-w-[400px] bg-[#FAFAF9] dark:bg-slate-800 border border-gray-200/60 dark:border-white/10 p-8 md:p-12 rounded-[36px] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.05)] dark:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.3)] mt-8 md:mt-0"
         >
           <div className="mb-10 text-center">
+            {/* Mobile Logo (hidden on desktop since it's on the left wall) */}
+            <div className="flex md:hidden justify-center items-center gap-2 mb-8">
+              <span className="text-[#24638F] dark:text-white font-bold text-xl tracking-tighter">GLIDE</span>
+              <div className="w-6 h-6 bg-[#24638F] dark:bg-white text-white dark:text-[#24638F] rounded-md flex items-center justify-center font-bold text-sm leading-none shadow-sm">
+                G
+              </div>
+              <span className="text-[#24638F] dark:text-white font-light text-xl tracking-[0.2em] ml-1">PARCS</span>
+            </div>
+
             <h2 className="text-[28px] font-semibold text-gray-800 dark:text-white tracking-tight">Welcome</h2>
             <p className="text-[15px] text-gray-500 dark:text-gray-400 mt-2">Sign in to the staff portal</p>
           </div>
