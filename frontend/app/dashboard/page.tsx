@@ -11,6 +11,7 @@ import {
 import TiltCard from '../components/TiltCard';
 import AnimatedCounter from '../components/AnimatedCounter';
 import { ThemeToggle } from '../components/ThemeToggle';
+import Link from 'next/link';
 
 const roles = ["admin", "it_admin", "manager", "staff", "viewer"] as const;
 type Role = typeof roles[number];
@@ -78,9 +79,14 @@ export default function Dashboard() {
       window.history.replaceState({}, '', '/dashboard');
     } else if (!hasShownWelcome && user) {
       const timer = setTimeout(() => {
-        toast('Welcome back to Glideparcs', {
+        toast('📢 Message from Admin: Welcome to Glideparcs!', {
           description: `Signed in as ${user.fullName} (${roleLabels[role]})`,
-          duration: 3500,
+          duration: 5000,
+          style: {
+            background: '#24638F',
+            color: '#ffffff',
+            border: '1px solid #1C5075',
+          }
         });
         setHasShownWelcome(true);
       }, 600);
@@ -177,60 +183,32 @@ export default function Dashboard() {
           )}
         </div>
 
-        {/* ── ANIMATED KPI COUNTER ROW ── */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.15 }}
-          className={`grid grid-cols-2 ${['admin', 'it_admin', 'manager'].includes(role) ? 'lg:grid-cols-4' : 'lg:grid-cols-3'} gap-4 mb-12`}
-        >
-          {[
-            { label: 'Cities',       target: 130,    suffix: '+',  icon: MapPin,     color: 'bg-blue-50 text-blue-600 border-blue-100 dark:bg-blue-900/30 dark:text-blue-400 dark:border-blue-800/50', show: true },
-            { label: 'Locations',    target: 1475,   suffix: '+',  icon: Building2,  color: 'bg-emerald-50 text-emerald-600 border-emerald-100 dark:bg-emerald-900/30 dark:text-emerald-400 dark:border-emerald-800/50', show: true },
-            { label: 'Spaces',       target: 200,    suffix: 'K+', icon: CreditCard, color: 'bg-violet-50 text-violet-600 border-violet-100 dark:bg-violet-900/30 dark:text-violet-400 dark:border-violet-800/50', show: true },
-            { label: 'Tracked Assets', target: inventorySummary?.totalAssets ?? 0,  suffix: '',   icon: Box,       color: 'bg-amber-50 text-amber-600 border-amber-100 dark:bg-amber-900/30 dark:text-amber-400 dark:border-amber-800/50', show: ['admin', 'it_admin', 'manager'].includes(role) },
-          ].filter(kpi => kpi.show).map((kpi, i) => (
-            <motion.div
-              key={kpi.label}
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 + i * 0.08 }}
-              className="bg-[#FAFAF9] dark:bg-slate-800 border border-gray-200/60 dark:border-white/10 rounded-[24px] p-6 shadow-[0_4px_20px_rgb(0,0,0,0.03)] dark:shadow-[0_4px_20px_rgb(0,0,0,0.2)] flex items-center gap-4"
-            >
-              <div className={`w-12 h-12 rounded-2xl flex items-center justify-center border ${kpi.color}`}>
-                <kpi.icon size={22} strokeWidth={2} />
-              </div>
-              <div>
-                <div className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
-                  <AnimatedCounter target={kpi.target} suffix={kpi.suffix} duration={1800} />
-                </div>
-                <div className="text-[12px] font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mt-0.5">{kpi.label}</div>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
+
 
         {/* ── ROLE-BASED FEATURE CARDS WITH 3D TILT ── */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           
           {/* Always visible for everyone */}
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
-            <TiltCard className="h-full bg-[#FAFAF9] dark:bg-slate-800 border border-gray-200/60 dark:border-white/10 hover:border-[#24638F]/30 dark:hover:border-[#24638F]/50 rounded-[32px] p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] hover:shadow-[0_20px_40px_rgb(36,99,143,0.08)] transition-shadow duration-300">
-              <div className="w-12 h-12 bg-[#24638F]/10 dark:bg-[#24638F]/20 rounded-2xl flex items-center justify-center mb-6 text-[#24638F] dark:text-[#55A6E2]">
-                <Megaphone size={24} strokeWidth={2} />
-              </div>
-              <h3 className="font-semibold text-2xl tracking-tight text-gray-900 dark:text-white mb-3">Announcements</h3>
-              <p className="text-gray-500 dark:text-gray-400 text-[15px] leading-relaxed mb-6">Latest company updates, policy changes, and important notices from leadership.</p>
-              <div className="flex items-center justify-between mt-auto">
-                <div className="px-3 py-1 bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-400 text-[12px] font-semibold rounded-full border border-amber-200 dark:border-amber-800/50">
-                  3 new this week
+            <Link href="/dashboard/announcements" className="block h-full">
+              <TiltCard className="h-full bg-[#FAFAF9] dark:bg-slate-800 border border-gray-200/60 dark:border-white/10 hover:border-[#24638F]/30 dark:hover:border-[#24638F]/50 rounded-[32px] p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] hover:shadow-[0_20px_40px_rgb(36,99,143,0.08)] transition-shadow duration-300">
+                <div className="w-12 h-12 bg-[#24638F]/10 dark:bg-[#24638F]/20 rounded-2xl flex items-center justify-center mb-6 text-[#24638F] dark:text-[#55A6E2]">
+                  <Megaphone size={24} strokeWidth={2} />
                 </div>
-                <button className="text-[#24638F] dark:text-[#55A6E2] font-semibold text-sm hover:underline flex items-center gap-1">Read <ChevronRight size={16}/></button>
-              </div>
-            </TiltCard>
+                <h3 className="font-semibold text-2xl tracking-tight text-gray-900 dark:text-white mb-3">Announcements</h3>
+                <p className="text-gray-500 dark:text-gray-400 text-[15px] leading-relaxed mb-6">Latest company updates, policy changes, and important notices from leadership.</p>
+                <div className="flex items-center justify-between mt-auto">
+                  <div className="px-3 py-1 bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-400 text-[12px] font-semibold rounded-full border border-amber-200 dark:border-amber-800/50">
+                    3 new this week
+                  </div>
+                  <div className="text-[#24638F] dark:text-[#55A6E2] font-semibold text-sm hover:underline flex items-center gap-1">Read <ChevronRight size={16}/></div>
+                </div>
+              </TiltCard>
+            </Link>
           </motion.div>
 
-          {['admin', 'it_admin', 'manager', 'staff'].includes(role) && (
+          {/* Temporarily hidden */}
+          {false && ['admin', 'it_admin', 'manager', 'staff'].includes(role) && (
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
               <TiltCard className="h-full bg-[#FAFAF9] dark:bg-slate-800 border border-gray-200/60 dark:border-white/10 hover:border-[#24638F]/30 dark:hover:border-[#24638F]/50 rounded-[32px] p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] hover:shadow-[0_20px_40px_rgb(36,99,143,0.08)] transition-shadow duration-300 flex flex-col">
                 <div className="w-12 h-12 bg-[#24638F]/10 dark:bg-[#24638F]/20 rounded-2xl flex items-center justify-center mb-6 text-[#24638F] dark:text-[#55A6E2]">
@@ -245,7 +223,8 @@ export default function Dashboard() {
             </motion.div>
           )}
 
-          {['admin', 'it_admin', 'manager'].includes(role) && (
+          {/* Temporarily hidden */}
+          {false && ['admin', 'it_admin', 'manager'].includes(role) && (
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
               <TiltCard className="h-full bg-[#FAFAF9] dark:bg-slate-800 border border-gray-200/60 dark:border-white/10 hover:border-[#24638F]/30 dark:hover:border-[#24638F]/50 rounded-[32px] p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] hover:shadow-[0_20px_40px_rgb(36,99,143,0.08)] transition-shadow duration-300 flex flex-col">
                 <div className="w-12 h-12 bg-[#24638F]/10 dark:bg-[#24638F]/20 rounded-2xl flex items-center justify-center mb-6 text-[#24638F] dark:text-[#55A6E2]">
@@ -264,7 +243,8 @@ export default function Dashboard() {
             </motion.div>
           )}
 
-          {['admin', 'manager'].includes(role) && (
+          {/* Temporarily hidden */}
+          {false && ['admin', 'manager'].includes(role) && (
             <motion.div className="defer-render" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
               <TiltCard className="h-full bg-[#FAFAF9] dark:bg-slate-800 border border-gray-200/60 dark:border-white/10 hover:border-[#24638F]/30 dark:hover:border-[#24638F]/50 rounded-[32px] p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] hover:shadow-[0_20px_40px_rgb(36,99,143,0.08)] transition-shadow duration-300">
                 <div className="w-12 h-12 bg-[#24638F]/10 dark:bg-[#24638F]/20 rounded-2xl flex items-center justify-center mb-6 text-[#24638F] dark:text-[#55A6E2]">
@@ -276,7 +256,8 @@ export default function Dashboard() {
             </motion.div>
           )}
 
-          {['admin', 'it_admin', 'manager', 'viewer'].includes(role) && (
+          {/* Temporarily hidden */}
+          {false && ['admin', 'it_admin', 'manager', 'viewer'].includes(role) && (
             <motion.div className="defer-render" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}>
               <TiltCard className="h-full bg-[#FAFAF9] dark:bg-slate-800 border border-gray-200/60 dark:border-white/10 hover:border-[#24638F]/30 dark:hover:border-[#24638F]/50 rounded-[32px] p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] hover:shadow-[0_20px_40px_rgb(36,99,143,0.08)] transition-shadow duration-300">
                 <div className="w-12 h-12 bg-[#24638F]/10 dark:bg-[#24638F]/20 rounded-2xl flex items-center justify-center mb-6 text-[#24638F] dark:text-[#55A6E2]">
@@ -292,7 +273,8 @@ export default function Dashboard() {
             </motion.div>
           )}
 
-          {['admin'].includes(role) && (
+          {/* Temporarily hidden */}
+          {false && ['admin'].includes(role) && (
             <motion.div className="defer-render" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }}>
               <TiltCard className="h-full bg-[#24638F] border border-[#1C5075] dark:border-[#1C5075]/50 rounded-[32px] p-8 shadow-[0_20px_40px_rgb(36,99,143,0.2)] dark:shadow-none flex flex-col text-white">
                 <div className="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center mb-6 text-white">

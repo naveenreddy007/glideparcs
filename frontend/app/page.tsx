@@ -49,9 +49,9 @@ export default function LandingPage() {
           >
             Staff Login
           </Link>
-          
+
           {/* Mobile Menu Button */}
-          <button 
+          <button
             className="lg:hidden flex items-center justify-center p-2 rounded-xl bg-white/10 text-white border border-white/20"
             onClick={() => setMobileMenuOpen(true)}
             aria-label="Open mobile menu"
@@ -81,7 +81,7 @@ export default function LandingPage() {
             >
               <div className="flex items-center justify-between mb-10">
                 <div className="text-lg font-bold tracking-tight text-white">Menu</div>
-                <button 
+                <button
                   onClick={() => setMobileMenuOpen(false)}
                   className="p-2 rounded-full bg-white/10 text-white"
                   aria-label="Close menu"
@@ -89,7 +89,7 @@ export default function LandingPage() {
                   <X size={20} />
                 </button>
               </div>
-              
+
               <nav className="flex flex-col gap-6 text-base font-semibold text-white/90">
                 <Link href="#" className="hover:text-white transition-colors" onClick={() => setMobileMenuOpen(false)}>Company News</Link>
                 <Link href="#" className="hover:text-white transition-colors" onClick={() => setMobileMenuOpen(false)}>Upcoming Events</Link>
@@ -122,7 +122,7 @@ export default function LandingPage() {
           transition={{ duration: 0.6 }}
           className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-bold uppercase tracking-[2px] text-white/80 backdrop-blur"
         >
-          <Sparkles size={15} /> Internal Operations Portal
+          <Sparkles size={15} /> Internal Employees Portal
         </motion.div>
 
         <motion.h1
@@ -143,39 +143,9 @@ export default function LandingPage() {
           Glideparcs staff portal for dashboard visibility, operational control, and internal team workflows.
         </motion.p>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 0.7 }}
-          className="mt-10 flex flex-col gap-4 sm:flex-row"
-        >
-          <Link
-            href="/login"
-            className="inline-flex items-center justify-center gap-2 rounded-2xl bg-white px-7 py-4 font-bold text-[#24638F] shadow-[0_20px_50px_rgba(0,0,0,0.25)] transition hover:scale-[1.03]"
-          >
-            Enter Staff Portal <ArrowRight size={18} />
-          </Link>
 
-          <Link
-            href="/dashboard"
-            className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/20 bg-white/10 px-7 py-4 font-bold text-white backdrop-blur transition hover:bg-white/15"
-          >
-            Preview Dashboard <LayoutDashboard size={18} />
-          </Link>
-        </motion.div>
 
-        <div className="mt-16 grid w-full max-w-3xl gap-4 md:grid-cols-3">
-          {[
-            { title: 'Secure Entry', icon: Shield },
-            { title: 'Dashboard First', icon: LayoutDashboard },
-            { title: 'Backend Ready', icon: Sparkles },
-          ].map(({ title, icon: Icon }) => (
-            <div key={title} className="rounded-[28px] border border-white/10 bg-white/10 p-6 backdrop-blur">
-              <Icon className="mx-auto mb-3 text-white" size={26} />
-              <div className="font-semibold">{title}</div>
-            </div>
-          ))}
-        </div>
+
       </section>
 
       <AnimatePresence>
@@ -188,7 +158,7 @@ export default function LandingPage() {
               transition={{ type: "spring", duration: 0.6, bounce: 0.3 }}
               className="relative w-full max-w-2xl max-h-[85vh] flex flex-col overflow-hidden rounded-[32px] bg-white text-slate-800 shadow-2xl ring-1 ring-white/10"
             >
-              <button 
+              <button
                 onClick={() => setShowPopup(false)}
                 className="absolute right-6 top-6 z-10 rounded-full bg-black/20 p-2 text-white backdrop-blur-md transition hover:bg-black/40 hover:scale-105"
               >
@@ -200,7 +170,7 @@ export default function LandingPage() {
                 <div className="absolute inset-0 bg-gradient-to-t from-[#24638F] via-[#24638F]/50 to-transparent"></div>
                 <div className="absolute inset-0 bg-gradient-to-r from-[#24638F] to-transparent opacity-80"></div>
                 <div className="absolute bottom-8 left-8 right-8 text-white">
-                  <motion.div 
+                  <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 }}
@@ -208,7 +178,7 @@ export default function LandingPage() {
                   >
                     Message from Adam
                   </motion.div>
-                  <motion.h2 
+                  <motion.h2
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 }}
@@ -220,7 +190,7 @@ export default function LandingPage() {
               </div>
 
               <div className="overflow-y-auto px-6 pb-8 pt-6 md:px-8 md:pb-10 md:pt-8">
-                <motion.p 
+                <motion.p
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.4 }}
@@ -229,11 +199,11 @@ export default function LandingPage() {
                   The team in India will focus on advancing Premium Parking's technology, GLIDEPARCS®, from platform enhancements to performance and scalability, continuing to deliver seamless, gateless parking experiences at scale. They'll work in close partnership with our U.S. teams, accelerating how quickly we bring new capabilities to market and raising the bar on what our platform can do.
                 </motion.p>
 
-                <motion.a 
+                <motion.a
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5 }}
-                  href="https://newsroom.premiumparking.com/premium-parking-opens-international-office-in-top-tech-hub-hyderabad" 
+                  href="https://newsroom.premiumparking.com/premium-parking-opens-international-office-in-top-tech-hub-hyderabad"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group flex items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-4 transition-all hover:border-[#24638F]/30 hover:bg-[#24638F]/5 hover:shadow-md"
