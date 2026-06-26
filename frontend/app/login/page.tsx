@@ -72,10 +72,10 @@ export default function UnifiedLandingLogin() {
   };
 
   return (
-    <div className="min-h-screen w-full flex flex-col md:flex-row overflow-hidden selection:bg-[#24638F]/20">
+    <div className="flex-1 w-full flex flex-col md:flex-row overflow-hidden selection:bg-[#24638F]/20">
       
       {/* LEFT PANE: The Premium Blue Wall */}
-      <div className="relative hidden md:flex w-full md:w-[55%] lg:w-[60%] bg-[#24638F] flex-col justify-between p-8 md:p-12 lg:p-20 overflow-hidden text-white z-10 min-h-screen">
+      <div className="relative hidden md:flex w-full md:w-[55%] lg:w-[60%] bg-[#24638F] flex-col justify-between p-8 md:p-12 lg:p-20 overflow-hidden text-white z-10">
         {/* Subtle lighting overlay for depth */}
         <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-black/20 pointer-events-none z-0" />
         
@@ -178,7 +178,7 @@ export default function UnifiedLandingLogin() {
       </div>
 
       {/* RIGHT PANE: Login & Icon Wall */}
-      <div className="relative w-full md:w-[45%] lg:w-[40%] flex items-center justify-center p-6 md:p-12 overflow-hidden min-h-screen">
+      <div className="relative w-full md:w-[45%] lg:w-[40%] flex items-center justify-center p-6 md:p-12 overflow-hidden">
         
         {/* Theme Toggle & Back Button in top right */}
         <div className="absolute top-6 left-6 md:right-6 md:left-auto z-50 flex items-center gap-3 w-full md:w-auto px-6 md:px-0 justify-between md:justify-end">

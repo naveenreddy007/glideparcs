@@ -17,7 +17,7 @@ export default function LandingPage() {
   }, []);
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-[#24638F] text-white selection:bg-white/20">
+    <main className="relative flex-1 flex flex-col overflow-hidden bg-[#24638F] text-white selection:bg-white/20">
       <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-black/30" />
       <FloatingParticles />
 
