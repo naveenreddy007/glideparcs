@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useMemo, useRef, useEffect } from 'react';
-import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   ArrowLeft, Globe2, Zap, Search, Download, Clock,
@@ -10,37 +9,39 @@ import {
 import FloatingParticles from '../components/FloatingParticles';
 import GlassCalendar, { Holiday } from '../components/GlassCalendar';
 
-/* ─────────────────── Holiday Data (25 entries) ─────────────────── */
+/* ─────────────────── Event Data (25 entries) ─────────────────── */
 
-const allHolidays: Holiday[] = [
-  // ── Global ──
-  { date: '2026-01-01', name: "New Year's Day",    type: 'Global', color: 'from-violet-400 to-blue-500',   emoji: '🎆' },
-  { date: '2026-03-08', name: "Women's Day",       type: 'Global', color: 'from-pink-400 to-purple-500',   emoji: '💜' },
-  { date: '2026-04-22', name: 'Earth Day',          type: 'Global', color: 'from-emerald-400 to-teal-500',  emoji: '🌍' },
-  { date: '2026-12-25', name: 'Christmas',          type: 'Global', color: 'from-green-400 to-red-500',     emoji: '🎄' },
+interface Event extends Holiday {
+  time?: string;
+  description?: string;
+}
 
-  // ── United States ──
-  { date: '2026-01-19', name: 'MLK Day',            type: 'US', color: 'from-red-400 to-blue-500',    emoji: '✊' },
-  { date: '2026-02-16', name: "Presidents' Day",    type: 'US', color: 'from-red-300 to-blue-400',    emoji: '🏛' },
-  { date: '2026-05-25', name: 'Memorial Day',       type: 'US', color: 'from-red-500 to-blue-600',    emoji: '🎖' },
-  { date: '2026-06-19', name: 'Juneteenth',         type: 'US', color: 'from-red-400 to-green-500',   emoji: '✊' },
-  { date: '2026-07-04', name: 'Independence Day',   type: 'US', color: 'from-red-500 to-blue-600',    emoji: '🇺🇸' },
-  { date: '2026-09-07', name: 'Labor Day',           type: 'US', color: 'from-blue-400 to-indigo-500', emoji: '💼' },
-  { date: '2026-10-12', name: 'Columbus Day',       type: 'US', color: 'from-amber-400 to-blue-500',  emoji: '🧭' },
-  { date: '2026-11-11', name: 'Veterans Day',       type: 'US', color: 'from-red-400 to-blue-500',    emoji: '🎖' },
-  { date: '2026-11-26', name: 'Thanksgiving',       type: 'US', color: 'from-orange-400 to-amber-600',emoji: '🦃' },
-
-  // ── India ──
-  { date: '2026-01-26', name: 'Republic Day',       type: 'India', color: 'from-orange-400 to-green-500',  emoji: '🇮🇳' },
-  { date: '2026-02-17', name: 'Maha Shivaratri',    type: 'India', color: 'from-indigo-400 to-purple-500', emoji: '🕉' },
-  { date: '2026-03-17', name: 'Holi',               type: 'India', color: 'from-pink-400 to-yellow-400',   emoji: '🎨' },
-  { date: '2026-04-06', name: 'Ram Navami',         type: 'India', color: 'from-orange-400 to-yellow-500', emoji: '🏹' },
-  { date: '2026-08-15', name: 'Independence Day',   type: 'India', color: 'from-orange-500 to-green-600',  emoji: '🇮🇳' },
-  { date: '2026-08-25', name: 'Janmashtami',        type: 'India', color: 'from-blue-400 to-indigo-500',   emoji: '🪈' },
-  { date: '2026-10-02', name: 'Gandhi Jayanti',     type: 'India', color: 'from-amber-300 to-orange-400',  emoji: '🕊' },
-  { date: '2026-10-21', name: 'Dussehra',           type: 'India', color: 'from-red-400 to-orange-500',    emoji: '🏹' },
-  { date: '2026-11-08', name: 'Diwali',             type: 'India', color: 'from-yellow-400 to-orange-500', emoji: '🪔' },
-  { date: '2026-11-15', name: 'Guru Nanak Jayanti', type: 'India', color: 'from-amber-400 to-yellow-500', emoji: '🙏' },
+const allEvents: Event[] = [
+  { date: '2026-01-05', name: 'New Year Kickoff',     type: 'Company',  color: 'from-violet-400 to-blue-500',   emoji: '🚀', time: '10:00 AM' },
+  { date: '2026-01-15', name: 'Sprint Planning',       type: 'Team',     color: 'from-blue-400 to-cyan-500',     emoji: '📋', time: '9:30 AM' },
+  { date: '2026-01-28', name: 'Riya Birthday',         type: 'Birthday', color: 'from-pink-400 to-purple-500',   emoji: '🎂', time: 'All Day' },
+  { date: '2026-02-03', name: 'AWS Training',          type: 'Training', color: 'from-amber-400 to-orange-500',   emoji: '☁️', time: '11:00 AM' },
+  { date: '2026-02-14', name: 'Valentine Social',      type: 'Social',   color: 'from-red-400 to-pink-500',       emoji: '💝', time: '4:00 PM' },
+  { date: '2026-02-20', name: 'All-Hands Meeting',     type: 'Company',  color: 'from-emerald-400 to-teal-500',   emoji: '📢', time: '2:00 PM' },
+  { date: '2026-03-01', name: 'Sprint Retro',          type: 'Team',     color: 'from-indigo-400 to-blue-500',    emoji: '🔄', time: '10:00 AM' },
+  { date: '2026-03-10', name: 'Arjun Birthday',        type: 'Birthday', color: 'from-yellow-400 to-orange-500',  emoji: '🎉', time: 'All Day' },
+  { date: '2026-03-18', name: 'React Workshop',        type: 'Training', color: 'from-cyan-400 to-blue-500',      emoji: '⚛️', time: '11:00 AM' },
+  { date: '2026-03-25', name: 'TGIF Happy Hour',       type: 'Social',   color: 'from-orange-400 to-red-500',     emoji: '🍻', time: '5:30 PM' },
+  { date: '2026-04-02', name: 'Q2 Planning',           type: 'Company',  color: 'from-purple-400 to-pink-500',    emoji: '🗺️', time: '9:00 AM' },
+  { date: '2026-04-12', name: 'Priya Birthday',        type: 'Birthday', color: 'from-green-400 to-teal-500',     emoji: '🎁', time: 'All Day' },
+  { date: '2026-04-18', name: 'Team Outing – Bowling',  type: 'Team',     color: 'from-red-400 to-yellow-500',     emoji: '🎳', time: '3:00 PM' },
+  { date: '2026-04-28', name: 'Docker Deep Dive',      type: 'Training', color: 'from-blue-400 to-indigo-500',    emoji: '🐳', time: '10:00 AM' },
+  { date: '2026-05-05', name: 'Cinco de Mayo Party',   type: 'Social',   color: 'from-green-400 to-red-500',      emoji: '🌮', time: '4:00 PM' },
+  { date: '2026-05-15', name: 'Sprint Review',         type: 'Team',     color: 'from-amber-400 to-yellow-500',   emoji: '✅', time: '11:00 AM' },
+  { date: '2026-05-22', name: 'Vikram Birthday',       type: 'Birthday', color: 'from-blue-400 to-purple-500',    emoji: '🎈', time: 'All Day' },
+  { date: '2026-06-01', name: 'Town Hall',             type: 'Company',  color: 'from-red-400 to-blue-500',       emoji: '🏛️', time: '3:00 PM' },
+  { date: '2026-06-10', name: 'Security Workshop',     type: 'Training', color: 'from-gray-400 to-slate-500',     emoji: '🔐', time: '9:30 AM' },
+  { date: '2026-06-19', name: 'Summer BBQ',            type: 'Social',   color: 'from-orange-400 to-amber-600',   emoji: '🍖', time: '12:00 PM' },
+  { date: '2026-07-02', name: 'Q3 Kickoff',            type: 'Company',  color: 'from-cyan-400 to-blue-500',      emoji: '🎯', time: '10:00 AM' },
+  { date: '2026-07-15', name: 'Ananya Birthday',       type: 'Birthday', color: 'from-pink-400 to-rose-500',      emoji: '🎊', time: 'All Day' },
+  { date: '2026-07-22', name: 'Hackathon Day 1',       type: 'Team',     color: 'from-purple-400 to-indigo-500',  emoji: '💻', time: '9:00 AM' },
+  { date: '2026-07-23', name: 'Hackathon Day 2',       type: 'Team',     color: 'from-purple-400 to-indigo-500',  emoji: '🏆', time: '9:00 AM' },
+  { date: '2026-07-30', name: 'GraphQL Workshop',      type: 'Training', color: 'from-pink-400 to-purple-500',    emoji: '📊', time: '2:00 PM' },
 ];
 
 /* ─────────────────── Helpers ─────────────────── */
@@ -54,14 +55,14 @@ function fmtDate(y: number, m: number, d: number) {
 /* ─────────────────── Mini‑Month (Year Overview) ─────────────────── */
 
 function MiniMonth({
-  monthIndex, year, holidays, isFocused, onClick,
+  monthIndex, year, events, isFocused, onClick,
 }: {
-  monthIndex: number; year: number; holidays: Holiday[]; isFocused: boolean; onClick: () => void;
+  monthIndex: number; year: number; events: Event[]; isFocused: boolean; onClick: () => void;
 }) {
   const daysInMonth = new Date(year, monthIndex + 1, 0).getDate();
   const firstDay = new Date(year, monthIndex, 1).getDay();
-  const holidayCount = holidays.filter(h => {
-    const d = new Date(h.date);
+  const eventCount = events.filter(e => {
+    const d = new Date(e.date);
     return d.getMonth() === monthIndex && d.getFullYear() === year;
   }).length;
 
@@ -77,21 +78,19 @@ function MiniMonth({
           : 'border-slate-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] hover:border-slate-300 dark:hover:border-white/15 hover:bg-slate-50 dark:hover:bg-white/[0.05]'
       }`}
     >
-      {/* Month label */}
       <div className="flex items-center justify-between mb-2">
         <span className={`text-[11px] font-bold tracking-wide ${isFocused ? 'text-cyan-600 dark:text-cyan-300' : 'text-slate-500 dark:text-white/45'}`}>
           {MONTH_SHORT[monthIndex]}
         </span>
-        {holidayCount > 0 && (
+        {eventCount > 0 && (
           <span className={`text-[9px] font-bold rounded-full px-1.5 py-0.5 ${
             isFocused ? 'bg-cyan-100 text-cyan-700 dark:bg-cyan-400/20 dark:text-cyan-300' : 'bg-slate-100 text-slate-500 dark:bg-white/10 dark:text-white/40'
           }`}>
-            {holidayCount}
+            {eventCount}
           </span>
         )}
       </div>
 
-      {/* Dot grid */}
       <div className="grid grid-cols-7 gap-[2.5px]">
         {Array.from({ length: firstDay }).map((_, i) => (
           <div key={`e-${i}`} className="w-[5px] h-[5px]" />
@@ -99,13 +98,13 @@ function MiniMonth({
         {Array.from({ length: daysInMonth }).map((_, i) => {
           const day = i + 1;
           const dateStr = fmtDate(year, monthIndex, day);
-          const holiday = holidays.find(h => h.date === dateStr);
+          const event = events.find(e => e.date === dateStr);
           return (
             <div
               key={day}
               className={`w-[5px] h-[5px] rounded-full transition-colors ${
-                holiday
-                  ? `bg-gradient-to-r ${holiday.color} shadow-[0_0_3px_rgba(255,255,255,0.4)] dark:shadow-[0_0_3px_rgba(255,255,255,0.25)]`
+                event
+                  ? `bg-gradient-to-r ${event.color} shadow-[0_0_3px_rgba(255,255,255,0.4)] dark:shadow-[0_0_3px_rgba(255,255,255,0.25)]`
                   : 'bg-slate-200 dark:bg-white/10'
               }`}
             />
@@ -118,80 +117,81 @@ function MiniMonth({
 
 /* ─────────────────── Page Component ─────────────────── */
 
-export default function HolidayCalendarPage() {
-  const [activeRegion, setActiveRegion] = useState<string>('India');
+export default function EventCalendarPage() {
+  const [activeCategory, setActiveCategory] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [focusedMonth, setFocusedMonth] = useState(new Date().getMonth());
   const [focusedYear] = useState(2026);
-  const [regionOpen, setRegionOpen] = useState(false);
-  const regionRef = useRef<HTMLDivElement>(null);
+  const [categoryOpen, setCategoryOpen] = useState(false);
+  const categoryRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (regionRef.current && !regionRef.current.contains(e.target as Node)) {
-        setRegionOpen(false);
+      if (categoryRef.current && !categoryRef.current.contains(e.target as Node)) {
+        setCategoryOpen(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  /* ── Filtered holidays ── */
-  const filteredHolidays = useMemo(() => {
-    return allHolidays.filter(h => {
-      const matchesRegion = h.type === 'Global' || h.type === activeRegion;
-      const matchesSearch = h.name.toLowerCase().includes(searchQuery.toLowerCase());
-      return matchesRegion && matchesSearch;
+  /* ── Filtered events ── */
+  const filteredEvents = useMemo(() => {
+    return allEvents.filter(e => {
+      const matchesCategory = activeCategory === 'All' || e.type === activeCategory;
+      const matchesSearch = e.name.toLowerCase().includes(searchQuery.toLowerCase());
+      return matchesCategory && matchesSearch;
     });
-  }, [activeRegion, searchQuery]);
+  }, [activeCategory, searchQuery]);
 
-  /* ── Next upcoming holiday ── */
-  const nextHoliday = useMemo(() => {
+  /* ── Next upcoming event ── */
+  const nextEvent = useMemo(() => {
     const today = new Date();
-    return filteredHolidays
-      .filter(h => new Date(h.date + 'T00:00:00') >= today)
+    return filteredEvents
+      .filter(e => new Date(e.date + 'T00:00:00') >= today)
       .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())[0] || null;
-  }, [filteredHolidays]);
+  }, [filteredEvents]);
 
   const daysUntilNext = useMemo(() => {
-    if (!nextHoliday) return null;
+    if (!nextEvent) return null;
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    const target = new Date(nextHoliday.date + 'T00:00:00');
+    const target = new Date(nextEvent.date + 'T00:00:00');
     return Math.ceil((target.getTime() - today.getTime()) / 86400000);
-  }, [nextHoliday]);
+  }, [nextEvent]);
 
   /* ── Stats ── */
   const stats = useMemo(() => {
-    const total = filteredHolidays.length;
-    const usCount = filteredHolidays.filter(h => h.type === 'US').length;
-    const indiaCount = filteredHolidays.filter(h => h.type === 'India').length;
-    const globalCount = filteredHolidays.filter(h => h.type === 'Global').length;
+    const total = filteredEvents.length;
+    const companyCount = filteredEvents.filter(e => e.type === 'Company').length;
+    const teamCount = filteredEvents.filter(e => e.type === 'Team').length;
+    const birthdayCount = filteredEvents.filter(e => e.type === 'Birthday').length;
+    const trainingCount = filteredEvents.filter(e => e.type === 'Training').length;
+    const socialCount = filteredEvents.filter(e => e.type === 'Social').length;
 
-    // Find next long weekend (holiday on Mon or Fri)
     const today = new Date();
-    const longWeekend = filteredHolidays.find(h => {
-      const d = new Date(h.date + 'T00:00:00');
+    const longWeekend = filteredEvents.find(e => {
+      const d = new Date(e.date + 'T00:00:00');
       if (d < today) return false;
       const dow = d.getDay();
-      return dow === 1 || dow === 5; // Monday or Friday
+      return dow === 1 || dow === 5;
     });
 
-    return { total, usCount, indiaCount, globalCount, longWeekend };
-  }, [filteredHolidays]);
+    return { total, companyCount, teamCount, birthdayCount, trainingCount, socialCount, longWeekend };
+  }, [filteredEvents]);
 
   /* ── ICS export ── */
   const downloadICS = () => {
-    let ics = 'BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Glideparcs//Holiday Calendar//EN\n';
-    filteredHolidays.forEach(h => {
-      const d = h.date.replace(/-/g, '');
-      ics += `BEGIN:VEVENT\nDTSTART;VALUE=DATE:${d}\nDTEND;VALUE=DATE:${d}\nSUMMARY:${h.emoji} ${h.name} (${h.type})\nEND:VEVENT\n`;
+    let ics = 'BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Glideparcs//Event Calendar//EN\n';
+    filteredEvents.forEach(e => {
+      const d = e.date.replace(/-/g, '');
+      ics += `BEGIN:VEVENT\nDTSTART;VALUE=DATE:${d}\nDTEND;VALUE=DATE:${d}\nSUMMARY:${e.emoji} ${e.name} (${e.type})\nEND:VEVENT\n`;
     });
     ics += 'END:VCALENDAR';
     const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = `glideparcs-holidays-${activeRegion.toLowerCase()}.ics`;
+    a.download = `glideparcs-events-${activeCategory.toLowerCase()}.ics`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -201,22 +201,26 @@ export default function HolidayCalendarPage() {
   const goToPrev = () => setFocusedMonth(p => (p === 0 ? 11 : p - 1));
   const goToNext = () => setFocusedMonth(p => (p === 11 ? 0 : p + 1));
 
-  /* ── Upcoming holidays for timeline ── */
-  const upcomingHolidays = useMemo(() => {
+  /* ── Upcoming events for timeline ── */
+  const upcomingEvents = useMemo(() => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    return filteredHolidays
-      .map(h => {
-        const d = new Date(h.date + 'T00:00:00');
+    return filteredEvents
+      .map(e => {
+        const d = new Date(e.date + 'T00:00:00');
         const diff = Math.ceil((d.getTime() - today.getTime()) / 86400000);
-        return { ...h, daysAway: diff };
+        return { ...e, daysAway: diff };
       })
       .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-  }, [filteredHolidays]);
+  }, [filteredEvents]);
 
-  const regions = [
-    { key: 'India', label: '🇮🇳 India' },
-    { key: 'US', label: '🇺🇸 United States' },
+  const categories = [
+    { key: 'All', label: '📅 All Events' },
+    { key: 'Company', label: '🏢 Company' },
+    { key: 'Team', label: '🤝 Team' },
+    { key: 'Birthday', label: '🎂 Birthdays' },
+    { key: 'Training', label: '📚 Training' },
+    { key: 'Social', label: '🎉 Social' },
   ];
 
   return (
@@ -228,8 +232,6 @@ export default function HolidayCalendarPage() {
         <div className="absolute right-0 bottom-0 h-[600px] w-[600px] translate-x-1/4 translate-y-1/4 rounded-full bg-cyan-400/20 dark:bg-cyan-600/10 blur-[150px]" />
       </div>
       <FloatingParticles />
-
-
 
       {/* ── Main Content ── */}
       <section className="relative z-10 mx-auto max-w-[1440px] px-5 md:px-10">
@@ -246,12 +248,12 @@ export default function HolidayCalendarPage() {
               <Zap size={12} className="fill-cyan-600 dark:fill-cyan-300" /> Enterprise Schedule
             </motion.div>
             <h1 className="text-4xl font-black tracking-tighter md:text-6xl text-slate-900 dark:text-white">
-              Holiday Calendar{' '}
+              Event Calendar{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-400 to-slate-200 dark:from-white/30 dark:to-white/10">2026</span>
             </h1>
           </motion.div>
 
-          {/* Search + Region pills */}
+          {/* Search + Category dropdown */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -265,31 +267,31 @@ export default function HolidayCalendarPage() {
                 type="text"
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
-                placeholder="Search holidays…"
-                aria-label="Search holidays"
+                placeholder="Search events…"
+                aria-label="Search events"
                 className="w-full sm:w-56 rounded-xl border border-slate-200 dark:border-white/10 bg-white/60 dark:bg-white/5 py-2.5 pl-10 pr-3 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-white/30 backdrop-blur-xl transition-all focus:border-cyan-400 dark:focus:border-cyan-400/40 focus:bg-white dark:focus:bg-white/10 focus:outline-none focus:ring-2 focus:ring-cyan-400/20 dark:focus:ring-cyan-400/10"
               />
             </div>
 
-            {/* Region dropdown + Export */}
+            {/* Category dropdown + Export */}
             <div className="flex gap-1.5 flex-wrap items-center">
-              <div className="relative" ref={regionRef}>
+              <div className="relative" ref={categoryRef}>
                 <button
-                  onClick={() => setRegionOpen(o => !o)}
+                  onClick={() => setCategoryOpen(o => !o)}
                   className="flex items-center gap-2 rounded-xl px-3.5 py-2 text-xs font-bold bg-slate-900 text-white dark:bg-white dark:text-[#0a1929] shadow-md transition-all"
                 >
-                  {regions.find(r => r.key === activeRegion)?.label}
-                  <ChevronDown size={14} className={`transition-transform duration-200 ${regionOpen ? 'rotate-180' : ''}`} />
+                  {categories.find(c => c.key === activeCategory)?.label}
+                  <ChevronDown size={14} className={`transition-transform duration-200 ${categoryOpen ? 'rotate-180' : ''}`} />
                 </button>
-                {regionOpen && (
+                {categoryOpen && (
                   <div className="absolute top-full mt-1.5 left-0 z-50 min-w-[180px] rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0f2744] shadow-lg overflow-hidden">
-                    {regions.filter(r => r.key !== activeRegion).map(r => (
+                    {categories.filter(c => c.key !== activeCategory).map(c => (
                       <button
-                        key={r.key}
-                        onClick={() => { setActiveRegion(r.key); setRegionOpen(false); }}
+                        key={c.key}
+                        onClick={() => { setActiveCategory(c.key); setCategoryOpen(false); }}
                         className="w-full text-left px-4 py-2.5 text-xs font-bold text-slate-600 dark:text-white/70 hover:bg-slate-50 dark:hover:bg-white/10 transition-colors"
                       >
-                        {r.label}
+                        {c.label}
                       </button>
                     ))}
                   </div>
@@ -328,7 +330,7 @@ export default function HolidayCalendarPage() {
                   key={i}
                   monthIndex={i}
                   year={focusedYear}
-                  holidays={filteredHolidays}
+                  events={filteredEvents}
                   isFocused={focusedMonth === i}
                   onClick={() => setFocusedMonth(i)}
                 />
@@ -346,7 +348,7 @@ export default function HolidayCalendarPage() {
               transition={{ type: 'spring', stiffness: 120, damping: 20, mass: 0.9, delay: 0.4 }}
             >
               <GlassCalendar
-                holidays={filteredHolidays}
+                holidays={filteredEvents}
                 month={focusedMonth}
                 year={focusedYear}
                 onPrev={goToPrev}
@@ -362,17 +364,18 @@ export default function HolidayCalendarPage() {
               className="flex flex-col gap-5"
             >
               {/* Countdown Widget */}
-              {nextHoliday && daysUntilNext !== null && (
+              {nextEvent && daysUntilNext !== null && (
                 <div className="relative rounded-[28px] border border-cyan-200 dark:border-cyan-400/20 bg-gradient-to-br from-cyan-50 to-white dark:from-cyan-900/20 dark:to-transparent p-6 backdrop-blur-[30px] shadow-sm dark:shadow-[0_0_30px_rgba(34,211,238,0.06)] overflow-hidden">
                   <div className="absolute -right-8 -top-8 h-24 w-24 rounded-full bg-cyan-200 dark:bg-cyan-400/15 blur-[30px]" />
                   <div className="relative z-10 flex items-center justify-between">
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-cyan-600 dark:text-cyan-300/70 mb-1">
-                        <Clock size={12} /> Next Holiday
+                        <Clock size={12} /> Next Event
                       </div>
-                      <div className="text-lg font-extrabold text-slate-900 dark:text-white truncate">{nextHoliday.emoji} {nextHoliday.name}</div>
+                      <div className="text-lg font-extrabold text-slate-900 dark:text-white truncate">{nextEvent.emoji} {nextEvent.name}</div>
                       <div className="text-[11px] text-slate-500 dark:text-white/40 font-semibold mt-0.5">
-                        {new Date(nextHoliday.date + 'T00:00:00').toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
+                        {new Date(nextEvent.date + 'T00:00:00').toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
+                        {nextEvent.time && ` · ${nextEvent.time}`}
                       </div>
                     </div>
                     <div className="text-right pl-4">
@@ -396,8 +399,20 @@ export default function HolidayCalendarPage() {
                 <div className="grid grid-cols-3 gap-3 mb-4">
                   {[
                     { label: 'Total', value: stats.total, color: 'text-slate-900 dark:text-white' },
-                    { label: 'US', value: stats.usCount, color: 'text-blue-600 dark:text-blue-400' },
-                    { label: 'India', value: stats.indiaCount, color: 'text-orange-600 dark:text-orange-400' },
+                    { label: 'Company', value: stats.companyCount, color: 'text-blue-600 dark:text-blue-400' },
+                    { label: 'Social', value: stats.socialCount, color: 'text-pink-600 dark:text-pink-400' },
+                  ].map(s => (
+                    <div key={s.label} className="rounded-xl bg-slate-50 dark:bg-white/[0.04] border border-slate-100 dark:border-white/[0.06] p-3 text-center">
+                      <div className={`text-2xl font-black ${s.color}`}>{s.value}</div>
+                      <div className="text-[9px] font-bold uppercase tracking-widest text-slate-400 dark:text-white/30 mt-1">{s.label}</div>
+                    </div>
+                  ))}
+                </div>
+                <div className="grid grid-cols-3 gap-3">
+                  {[
+                    { label: 'Team', value: stats.teamCount, color: 'text-indigo-600 dark:text-indigo-400' },
+                    { label: 'Training', value: stats.trainingCount, color: 'text-amber-600 dark:text-amber-400' },
+                    { label: 'Birthdays', value: stats.birthdayCount, color: 'text-purple-600 dark:text-purple-400' },
                   ].map(s => (
                     <div key={s.label} className="rounded-xl bg-slate-50 dark:bg-white/[0.04] border border-slate-100 dark:border-white/[0.06] p-3 text-center">
                       <div className={`text-2xl font-black ${s.color}`}>{s.value}</div>
@@ -406,10 +421,10 @@ export default function HolidayCalendarPage() {
                   ))}
                 </div>
                 {stats.longWeekend && (
-                  <div className="flex items-center gap-2 rounded-xl bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-100 dark:border-emerald-400/20 px-3 py-2.5">
+                  <div className="flex items-center gap-2 rounded-xl bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-100 dark:border-emerald-400/20 px-3 py-2.5 mt-4">
                     <Palmtree size={14} className="text-emerald-600 dark:text-emerald-400 shrink-0" />
                     <div>
-                      <div className="text-[10px] font-bold text-emerald-700/80 dark:text-emerald-300/70 uppercase tracking-wider">Next Long Weekend</div>
+                      <div className="text-[10px] font-bold text-emerald-700/80 dark:text-emerald-300/70 uppercase tracking-wider">Next Mon/Fri Event</div>
                       <div className="text-xs font-bold text-slate-900 dark:text-white mt-0.5">{stats.longWeekend.emoji} {stats.longWeekend.name}</div>
                     </div>
                   </div>
@@ -423,63 +438,62 @@ export default function HolidayCalendarPage() {
                     <Globe2 size={18} className="text-cyan-600 dark:text-cyan-400" />
                     <h2 className="text-sm font-bold tracking-wide text-slate-600 dark:text-white/60 uppercase">Upcoming</h2>
                     <span className="ml-auto text-[10px] font-bold rounded-full bg-slate-200 dark:bg-white/10 px-2 py-0.5 text-slate-500 dark:text-white/40">
-                      {upcomingHolidays.filter(h => h.daysAway >= 0).length}
+                      {upcomingEvents.filter(e => e.daysAway >= 0).length}
                     </span>
                   </div>
                 </div>
 
                 <div className="flex-1 overflow-y-auto px-5 pb-5 space-y-2 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-slate-300 dark:[&::-webkit-scrollbar-thumb]:bg-white/15 [&::-webkit-scrollbar-track]:bg-transparent">
                   <AnimatePresence>
-                    {upcomingHolidays.map(holiday => (
+                    {upcomingEvents.map(event => (
                       <motion.div
                         layout
-                        key={holiday.date + holiday.name}
+                        key={event.date + event.name}
                         initial={{ opacity: 0, x: -20, scale: 0.95 }}
                         animate={{ opacity: 1, x: 0, scale: 1 }}
                         exit={{ opacity: 0, x: -20, scale: 0.95 }}
                         transition={{ type: 'spring', stiffness: 200, damping: 22, mass: 0.7 }}
                         className={`group relative flex items-center gap-3 rounded-2xl border p-3.5 transition-all duration-200 hover:-translate-y-0.5 shadow-sm hover:shadow-md dark:shadow-none dark:hover:shadow-lg ${
-                          holiday.daysAway < 0
+                          event.daysAway < 0
                             ? 'border-slate-100 dark:border-white/[0.03] bg-slate-50/50 dark:bg-white/[0.01] opacity-60 dark:opacity-40'
                             : 'border-slate-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.03] hover:bg-slate-50 dark:hover:bg-white/[0.07] hover:border-slate-300 dark:hover:border-white/15'
                         }`}
                       >
-                        {/* Color accent bar */}
-                        <div className={`w-1 self-stretch rounded-full bg-gradient-to-b ${holiday.color} shrink-0`} />
+                        <div className={`w-1 self-stretch rounded-full bg-gradient-to-b ${event.color} shrink-0`} />
 
-                        {/* Emoji */}
-                        <span className="text-xl shrink-0">{holiday.emoji}</span>
+                        <span className="text-xl shrink-0">{event.emoji}</span>
 
-                        {/* Text */}
                         <div className="flex-1 min-w-0">
                           <div className="text-sm font-bold text-slate-900 dark:text-white truncate group-hover:text-cyan-700 dark:group-hover:text-cyan-200 transition-colors">
-                            {holiday.name}
+                            {event.name}
                           </div>
                           <div className="flex items-center gap-2 mt-0.5">
                             <span className="text-[10px] font-bold rounded-full bg-slate-100 dark:bg-white/10 px-1.5 py-0.5 text-slate-500 dark:text-white/40 uppercase tracking-wider">
-                              {holiday.type}
+                              {event.type}
                             </span>
                             <span className="text-[10px] font-semibold text-slate-400 dark:text-white/30">
-                              {new Date(holiday.date + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                              {new Date(event.date + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                             </span>
+                            {event.time && (
+                              <span className="text-[10px] font-semibold text-slate-400 dark:text-white/30">{event.time}</span>
+                            )}
                           </div>
                         </div>
 
-                        {/* Days away badge */}
-                        {holiday.daysAway >= 0 && (
+                        {event.daysAway >= 0 && (
                           <div className="text-right shrink-0 pl-2">
-                            <div className="text-sm font-black text-slate-500 dark:text-white/50">{holiday.daysAway}</div>
+                            <div className="text-sm font-black text-slate-500 dark:text-white/50">{event.daysAway}</div>
                             <div className="text-[8px] font-bold uppercase tracking-wider text-slate-400 dark:text-white/25">
-                              {holiday.daysAway === 0 ? 'Today!' : holiday.daysAway === 1 ? 'day' : 'days'}
+                              {event.daysAway === 0 ? 'Today!' : event.daysAway === 1 ? 'day' : 'days'}
                             </div>
                           </div>
                         )}
                       </motion.div>
                     ))}
 
-                    {upcomingHolidays.length === 0 && (
+                    {upcomingEvents.length === 0 && (
                       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center text-slate-400 dark:text-white/30 py-8 text-sm font-medium italic">
-                        No holidays match your criteria.
+                        No events match your criteria.
                       </motion.div>
                     )}
                   </AnimatePresence>

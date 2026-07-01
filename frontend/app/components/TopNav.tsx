@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, LogOut, CalendarDays, Menu, X } from 'lucide-react';
+import { LayoutDashboard, LogOut, CalendarDays, Sparkles, Newspaper, Menu, X } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -37,6 +37,26 @@ export function TopNav() {
           }`}
         >
           <LayoutDashboard size={16} /> Dashboard
+        </Link>
+        <Link
+          href="/newsroom"
+          className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold transition ${
+            pathname === '/newsroom' || pathname.startsWith('/newsroom/')
+              ? 'bg-white/20 text-white shadow-inner'
+              : 'text-white/75 hover:bg-white/10 hover:text-white'
+          }`}
+        >
+          <Newspaper size={16} /> Newsroom
+        </Link>
+        <Link
+          href="/event-calendar"
+          className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold transition ${
+            pathname === '/event-calendar'
+              ? 'bg-white/20 text-white shadow-inner'
+              : 'text-white/75 hover:bg-white/10 hover:text-white'
+          }`}
+        >
+          <Sparkles size={16} /> Events
         </Link>
         <Link
           href="/holiday-calendar"
@@ -108,6 +128,20 @@ export function TopNav() {
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   <LayoutDashboard size={20} /> Dashboard
+                </Link>
+                <Link 
+                  href="/newsroom" 
+                  className={`flex items-center gap-3 p-3 rounded-xl transition-colors ${pathname === '/newsroom' || pathname.startsWith('/newsroom/') ? 'bg-white/20' : 'hover:bg-white/10'}`}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <Newspaper size={20} /> Newsroom
+                </Link>
+                <Link 
+                  href="/event-calendar" 
+                  className={`flex items-center gap-3 p-3 rounded-xl transition-colors ${pathname === '/event-calendar' ? 'bg-white/20' : 'hover:bg-white/10'}`}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <Sparkles size={20} /> Event Calendar
                 </Link>
                 <Link 
                   href="/holiday-calendar" 

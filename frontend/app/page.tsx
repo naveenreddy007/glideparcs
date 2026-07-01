@@ -33,8 +33,8 @@ export default function LandingPage() {
         </Link>
 
         <nav className="hidden lg:flex items-center gap-8 text-sm font-medium text-white/80">
-          <Link href="#" className="hover:text-white transition-colors">Company News</Link>
-          <Link href="#" className="hover:text-white transition-colors">Upcoming Events</Link>
+          <Link href="/newsroom" className="hover:text-white transition-colors">Company News</Link>
+          <Link href="/event-calendar" className="hover:text-white transition-colors">Event Calendar</Link>
           <Link href="/holiday-calendar" className="hover:text-white transition-colors">Holiday Calendar</Link>
           <Link href="#" className="hover:text-white transition-colors">Organization Hierarchy</Link>
         </nav>
@@ -47,7 +47,7 @@ export default function LandingPage() {
             href="/login"
             className="hidden sm:flex rounded-2xl bg-white px-5 py-2.5 text-sm font-bold text-[#24638F] shadow-lg transition hover:scale-[1.02]"
           >
-            Staff Login
+            Employee Login
           </Link>
 
           {/* Mobile Menu Button */}
@@ -91,8 +91,8 @@ export default function LandingPage() {
               </div>
 
               <nav className="flex flex-col gap-6 text-base font-semibold text-white/90">
-                <Link href="#" className="hover:text-white transition-colors" onClick={() => setMobileMenuOpen(false)}>Company News</Link>
-                <Link href="#" className="hover:text-white transition-colors" onClick={() => setMobileMenuOpen(false)}>Upcoming Events</Link>
+                <Link href="/newsroom" className="hover:text-white transition-colors" onClick={() => setMobileMenuOpen(false)}>Company News</Link>
+                <Link href="/event-calendar" className="hover:text-white transition-colors" onClick={() => setMobileMenuOpen(false)}>Event Calendar</Link>
                 <Link href="/holiday-calendar" className="hover:text-white transition-colors" onClick={() => setMobileMenuOpen(false)}>Holiday Calendar</Link>
                 <Link href="#" className="hover:text-white transition-colors" onClick={() => setMobileMenuOpen(false)}>Organization Hierarchy</Link>
               </nav>
@@ -107,7 +107,7 @@ export default function LandingPage() {
                   className="rounded-xl bg-white px-5 py-3.5 text-center text-sm font-bold text-[#24638F] shadow-lg"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  Staff Login
+                  Employee Login
                 </Link>
               </div>
             </motion.div>
@@ -184,7 +184,7 @@ export default function LandingPage() {
                     transition={{ delay: 0.3 }}
                     className="text-4xl font-extrabold tracking-tight md:text-5xl"
                   >
-                    Welcome to Premium Parking India
+                    Welcome to GLIDEPARCS&reg; Premium Parking India GCC
                   </motion.h2>
                 </div>
               </div>
