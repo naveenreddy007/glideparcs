@@ -1,0 +1,47 @@
+{
+  "stats": {
+    "cities": "130+",
+    "locations": "1,475+",
+    "spaces": "200K+",
+    "founded": "2005",
+    "hq": "New Orleans, LA",
+    "platform": "GLIDEPARCS®"
+  },
+  "timeline": [
+    {
+      "year": "2005",
+      "title": "Founded in New Orleans",
+      "description": "Jim Huger founded Premium Parking in June 2005, just two months before Hurricane Katrina."
+    },
+    {
+      "year": "2008",
+      "title": "Ben Montgomery Joins",
+      "description": "Ben Montgomery joins as President with the goal of growing Premium through operational excellence."
+    },
+    {
+      "year": "2013",
+      "title": "Technology Pivot",
+      "description": "Built our own mobile app and launched text-to-pay parking. The beginning of GLIDEPARCS®."
+    },
+    {
+      "year": "2017",
+      "title": "Gateless Revolution",
+      "description": "Tested gateless free-flow model. The gateless lot outperformed the gated one. GLIDEPARCS® was born."
+    },
+    {
+      "year": "2019",
+      "title": "Garages at Scale",
+      "description": "Expanded gateless operations to garages, including a major 1,600-space facility."
+    },
+    {
+      "year": "2020",
+      "title": "Contactless Acceleration",
+      "description": "Pandemic accelerated demand for contactless payments. QR codes and digital workflows refined."
+    },
+    {
+      "year": "2026",
+      "title": "India GCC Opens",
+      "description": "Premium Parking opens international office in Hyderabad, India — a global technology hub."
+    }
+  ]
+}

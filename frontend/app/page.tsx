@@ -36,7 +36,7 @@ export default function LandingPage() {
           <Link href="/newsroom" className="hover:text-white transition-colors">Company News</Link>
           <Link href="/event-calendar" className="hover:text-white transition-colors">Event Calendar</Link>
           <Link href="/holiday-calendar" className="hover:text-white transition-colors">Holiday Calendar</Link>
-          <Link href="#" className="hover:text-white transition-colors">Organization Hierarchy</Link>
+          <Link href="/org-hierarchy" className="hover:text-white transition-colors">Organization Hierarchy</Link>
         </nav>
 
         <div className="flex items-center gap-3">
@@ -94,7 +94,7 @@ export default function LandingPage() {
                 <Link href="/newsroom" className="hover:text-white transition-colors" onClick={() => setMobileMenuOpen(false)}>Company News</Link>
                 <Link href="/event-calendar" className="hover:text-white transition-colors" onClick={() => setMobileMenuOpen(false)}>Event Calendar</Link>
                 <Link href="/holiday-calendar" className="hover:text-white transition-colors" onClick={() => setMobileMenuOpen(false)}>Holiday Calendar</Link>
-                <Link href="#" className="hover:text-white transition-colors" onClick={() => setMobileMenuOpen(false)}>Organization Hierarchy</Link>
+                <Link href="/org-hierarchy" className="hover:text-white transition-colors" onClick={() => setMobileMenuOpen(false)}>Organization Hierarchy</Link>
               </nav>
 
               <div className="mt-auto flex flex-col gap-4">

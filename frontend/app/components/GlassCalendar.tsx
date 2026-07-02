@@ -5,11 +5,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 export interface Holiday {
+  id?: number;
   date: string;
   name: string;
   type: string;
   color: string;
   emoji: string;
+  region?: string;
+  description?: string;
 }
 
 interface GlassCalendarProps {

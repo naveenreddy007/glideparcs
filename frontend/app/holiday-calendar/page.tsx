@@ -9,39 +9,7 @@ import {
 } from 'lucide-react';
 import FloatingParticles from '../components/FloatingParticles';
 import GlassCalendar, { Holiday } from '../components/GlassCalendar';
-
-/* ─────────────────── Holiday Data (25 entries) ─────────────────── */
-
-const allHolidays: Holiday[] = [
-  // ── Global ──
-  { date: '2026-01-01', name: "New Year's Day",    type: 'Global', color: 'from-violet-400 to-blue-500',   emoji: '🎆' },
-  { date: '2026-03-08', name: "Women's Day",       type: 'Global', color: 'from-pink-400 to-purple-500',   emoji: '💜' },
-  { date: '2026-04-22', name: 'Earth Day',          type: 'Global', color: 'from-emerald-400 to-teal-500',  emoji: '🌍' },
-  { date: '2026-12-25', name: 'Christmas',          type: 'Global', color: 'from-green-400 to-red-500',     emoji: '🎄' },
-
-  // ── United States ──
-  { date: '2026-01-19', name: 'MLK Day',            type: 'US', color: 'from-red-400 to-blue-500',    emoji: '✊' },
-  { date: '2026-02-16', name: "Presidents' Day",    type: 'US', color: 'from-red-300 to-blue-400',    emoji: '🏛' },
-  { date: '2026-05-25', name: 'Memorial Day',       type: 'US', color: 'from-red-500 to-blue-600',    emoji: '🎖' },
-  { date: '2026-06-19', name: 'Juneteenth',         type: 'US', color: 'from-red-400 to-green-500',   emoji: '✊' },
-  { date: '2026-07-04', name: 'Independence Day',   type: 'US', color: 'from-red-500 to-blue-600',    emoji: '🇺🇸' },
-  { date: '2026-09-07', name: 'Labor Day',           type: 'US', color: 'from-blue-400 to-indigo-500', emoji: '💼' },
-  { date: '2026-10-12', name: 'Columbus Day',       type: 'US', color: 'from-amber-400 to-blue-500',  emoji: '🧭' },
-  { date: '2026-11-11', name: 'Veterans Day',       type: 'US', color: 'from-red-400 to-blue-500',    emoji: '🎖' },
-  { date: '2026-11-26', name: 'Thanksgiving',       type: 'US', color: 'from-orange-400 to-amber-600',emoji: '🦃' },
-
-  // ── India ──
-  { date: '2026-01-26', name: 'Republic Day',       type: 'India', color: 'from-orange-400 to-green-500',  emoji: '🇮🇳' },
-  { date: '2026-02-17', name: 'Maha Shivaratri',    type: 'India', color: 'from-indigo-400 to-purple-500', emoji: '🕉' },
-  { date: '2026-03-17', name: 'Holi',               type: 'India', color: 'from-pink-400 to-yellow-400',   emoji: '🎨' },
-  { date: '2026-04-06', name: 'Ram Navami',         type: 'India', color: 'from-orange-400 to-yellow-500', emoji: '🏹' },
-  { date: '2026-08-15', name: 'Independence Day',   type: 'India', color: 'from-orange-500 to-green-600',  emoji: '🇮🇳' },
-  { date: '2026-08-25', name: 'Janmashtami',        type: 'India', color: 'from-blue-400 to-indigo-500',   emoji: '🪈' },
-  { date: '2026-10-02', name: 'Gandhi Jayanti',     type: 'India', color: 'from-amber-300 to-orange-400',  emoji: '🕊' },
-  { date: '2026-10-21', name: 'Dussehra',           type: 'India', color: 'from-red-400 to-orange-500',    emoji: '🏹' },
-  { date: '2026-11-08', name: 'Diwali',             type: 'India', color: 'from-yellow-400 to-orange-500', emoji: '🪔' },
-  { date: '2026-11-15', name: 'Guru Nanak Jayanti', type: 'India', color: 'from-amber-400 to-yellow-500', emoji: '🙏' },
-];
+import { allHolidays, HOLIDAY_REGIONS } from '../data/holidays';
 
 /* ─────────────────── Helpers ─────────────────── */
 

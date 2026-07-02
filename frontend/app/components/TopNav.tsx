@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, LogOut, CalendarDays, Sparkles, Newspaper, Menu, X } from 'lucide-react';
+import { LayoutDashboard, LogOut, CalendarDays, Sparkles, Newspaper, Network, Menu, X } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -47,6 +47,16 @@ export function TopNav() {
           }`}
         >
           <Newspaper size={16} /> Newsroom
+        </Link>
+        <Link
+          href="/org-hierarchy"
+          className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold transition ${
+            pathname === '/org-hierarchy'
+              ? 'bg-white/20 text-white shadow-inner'
+              : 'text-white/75 hover:bg-white/10 hover:text-white'
+          }`}
+        >
+          <Network size={16} /> Team
         </Link>
         <Link
           href="/event-calendar"
@@ -135,6 +145,13 @@ export function TopNav() {
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   <Newspaper size={20} /> Newsroom
+                </Link>
+                <Link 
+                  href="/org-hierarchy" 
+                  className={`flex items-center gap-3 p-3 rounded-xl transition-colors ${pathname === '/org-hierarchy' ? 'bg-white/20' : 'hover:bg-white/10'}`}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <Network size={20} /> Org Hierarchy
                 </Link>
                 <Link 
                   href="/event-calendar" 

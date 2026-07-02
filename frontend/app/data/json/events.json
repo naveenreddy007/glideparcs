@@ -1,0 +1,227 @@
+[
+  {
+    "id": 1,
+    "date": "2026-01-05",
+    "name": "New Year Kickoff",
+    "type": "Company",
+    "color": "from-violet-400 to-blue-500",
+    "emoji": "🚀",
+    "time": "10:00 AM"
+  },
+  {
+    "id": 2,
+    "date": "2026-01-15",
+    "name": "Sprint Planning",
+    "type": "Team",
+    "color": "from-blue-400 to-cyan-500",
+    "emoji": "📋",
+    "time": "9:30 AM"
+  },
+  {
+    "id": 3,
+    "date": "2026-01-28",
+    "name": "Riya Birthday",
+    "type": "Birthday",
+    "color": "from-pink-400 to-purple-500",
+    "emoji": "🎂",
+    "time": "All Day"
+  },
+  {
+    "id": 4,
+    "date": "2026-02-03",
+    "name": "AWS Training",
+    "type": "Training",
+    "color": "from-amber-400 to-orange-500",
+    "emoji": "☁️",
+    "time": "11:00 AM"
+  },
+  {
+    "id": 5,
+    "date": "2026-02-14",
+    "name": "Valentine Social",
+    "type": "Social",
+    "color": "from-red-400 to-pink-500",
+    "emoji": "💝",
+    "time": "4:00 PM"
+  },
+  {
+    "id": 6,
+    "date": "2026-02-20",
+    "name": "All-Hands Meeting",
+    "type": "Company",
+    "color": "from-emerald-400 to-teal-500",
+    "emoji": "📢",
+    "time": "2:00 PM"
+  },
+  {
+    "id": 7,
+    "date": "2026-03-01",
+    "name": "Sprint Retro",
+    "type": "Team",
+    "color": "from-indigo-400 to-blue-500",
+    "emoji": "🔄",
+    "time": "10:00 AM"
+  },
+  {
+    "id": 8,
+    "date": "2026-03-10",
+    "name": "Arjun Birthday",
+    "type": "Birthday",
+    "color": "from-yellow-400 to-orange-500",
+    "emoji": "🎉",
+    "time": "All Day"
+  },
+  {
+    "id": 9,
+    "date": "2026-03-18",
+    "name": "React Workshop",
+    "type": "Training",
+    "color": "from-cyan-400 to-blue-500",
+    "emoji": "⚛️",
+    "time": "11:00 AM"
+  },
+  {
+    "id": 10,
+    "date": "2026-03-25",
+    "name": "TGIF Happy Hour",
+    "type": "Social",
+    "color": "from-orange-400 to-red-500",
+    "emoji": "🍻",
+    "time": "5:30 PM"
+  },
+  {
+    "id": 11,
+    "date": "2026-04-02",
+    "name": "Q2 Planning",
+    "type": "Company",
+    "color": "from-purple-400 to-pink-500",
+    "emoji": "🗺️",
+    "time": "9:00 AM"
+  },
+  {
+    "id": 12,
+    "date": "2026-04-12",
+    "name": "Priya Birthday",
+    "type": "Birthday",
+    "color": "from-green-400 to-teal-500",
+    "emoji": "🎁",
+    "time": "All Day"
+  },
+  {
+    "id": 13,
+    "date": "2026-04-18",
+    "name": "Team Outing – Bowling",
+    "type": "Team",
+    "color": "from-red-400 to-yellow-500",
+    "emoji": "🎳",
+    "time": "3:00 PM"
+  },
+  {
+    "id": 14,
+    "date": "2026-04-28",
+    "name": "Docker Deep Dive",
+    "type": "Training",
+    "color": "from-blue-400 to-indigo-500",
+    "emoji": "🐳",
+    "time": "10:00 AM"
+  },
+  {
+    "id": 15,
+    "date": "2026-05-05",
+    "name": "Cinco de Mayo Party",
+    "type": "Social",
+    "color": "from-green-400 to-red-500",
+    "emoji": "🌮",
+    "time": "4:00 PM"
+  },
+  {
+    "id": 16,
+    "date": "2026-05-15",
+    "name": "Sprint Review",
+    "type": "Team",
+    "color": "from-amber-400 to-yellow-500",
+    "emoji": "✅",
+    "time": "11:00 AM"
+  },
+  {
+    "id": 17,
+    "date": "2026-05-22",
+    "name": "Vikram Birthday",
+    "type": "Birthday",
+    "color": "from-blue-400 to-purple-500",
+    "emoji": "🎈",
+    "time": "All Day"
+  },
+  {
+    "id": 18,
+    "date": "2026-06-01",
+    "name": "Town Hall",
+    "type": "Company",
+    "color": "from-red-400 to-blue-500",
+    "emoji": "🏛️",
+    "time": "3:00 PM"
+  },
+  {
+    "id": 19,
+    "date": "2026-06-10",
+    "name": "Security Workshop",
+    "type": "Training",
+    "color": "from-gray-400 to-slate-500",
+    "emoji": "🔐",
+    "time": "9:30 AM"
+  },
+  {
+    "id": 20,
+    "date": "2026-06-19",
+    "name": "Summer BBQ",
+    "type": "Social",
+    "color": "from-orange-400 to-amber-600",
+    "emoji": "🍖",
+    "time": "12:00 PM"
+  },
+  {
+    "id": 21,
+    "date": "2026-07-02",
+    "name": "Q3 Kickoff",
+    "type": "Company",
+    "color": "from-cyan-400 to-blue-500",
+    "emoji": "🎯",
+    "time": "10:00 AM"
+  },
+  {
+    "id": 22,
+    "date": "2026-07-15",
+    "name": "Ananya Birthday",
+    "type": "Birthday",
+    "color": "from-pink-400 to-rose-500",
+    "emoji": "🎊",
+    "time": "All Day"
+  },
+  {
+    "id": 23,
+    "date": "2026-07-22",
+    "name": "Hackathon Day 1",
+    "type": "Team",
+    "color": "from-purple-400 to-indigo-500",
+    "emoji": "💻",
+    "time": "9:00 AM"
+  },
+  {
+    "id": 24,
+    "date": "2026-07-23",
+    "name": "Hackathon Day 2",
+    "type": "Team",
+    "color": "from-purple-400 to-indigo-500",
+    "emoji": "🏆",
+    "time": "9:00 AM"
+  },
+  {
+    "id": 25,
+    "date": "2026-07-30",
+    "name": "GraphQL Workshop",
+    "type": "Training",
+    "color": "from-pink-400 to-purple-500",
+    "emoji": "📊",
+    "time": "2:00 PM"
+  }
+]
